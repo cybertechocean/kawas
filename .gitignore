@@ -30,7 +30,5 @@ local_settings.py
 media/
 staticfiles/
 
-# HostNali / cPanel specific entries
-passenger_wsgi.py
+# cPanel — keep public/ out of git (web server handles it)
 public/
-.htaccess

@@ -1,0 +1,27 @@
+# ─── KAWA'S Café — cPanel / LiteSpeed / Apache Rewrite Rules ─────────────────
+# Place in the same directory as passenger_wsgi.py (your domain root).
+# LiteSpeed reads this automatically; no extra Apache module needed.
+
+Options -Indexes
+Options +FollowSymLinks
+
+# ── Passenger WSGI ────────────────────────────────────────────────────────────
+PassengerEnabled On
+PassengerAppType wsgi
+PassengerStartupFile passenger_wsgi.py
+
+RewriteEngine On
+
+# 1. Let the web server serve real files directly (images, CSS, JS, etc.)
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# 2. Serve Django's collected static files directly via the web server.
+#    Run `python manage.py collectstatic` first — it outputs to staticfiles/.
+RewriteRule ^static/(.*)$ staticfiles/$1 [QSA,L]
+
+# 3. Serve user-uploaded media files directly (if stored locally).
+#    Not needed when using Cloudinary — all media is served from CDN.
+# RewriteRule ^media/(.*)$ media/$1 [QSA,L]
+
+# 4. Everything else passes through Passenger → Django.

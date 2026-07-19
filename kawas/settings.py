@@ -12,16 +12,35 @@ SECRET_KEY = config('SESSION_SECRET', default='django-insecure-kawas-dev-key-cha
 
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS',
+    default='localhost,127.0.0.1,kawas.co.ke,www.kawas.co.ke'
+).split(',')
 
-# CSRF trusted origins for Replit preview
+# CSRF trusted origins
 CSRF_TRUSTED_ORIGINS = [
+    # Production domain
+    'https://kawas.co.ke',
+    'https://www.kawas.co.ke',
+    # Replit preview
     'https://*.replit.dev',
     'https://*.replit.app',
     'https://*.repl.co',
     'http://localhost:5000',
     'http://127.0.0.1:5000',
 ]
+
+# ── Production security (only active when DEBUG=False) ────────────────────────
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000        # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
 
 INSTALLED_APPS = [
     # Django Unfold (must be before django.contrib.admin)
