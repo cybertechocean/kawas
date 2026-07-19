@@ -4,6 +4,7 @@ Django settings for KAWA'S Café website.
 
 from pathlib import Path
 from decouple import config
+import cloudinary
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -35,6 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    # Cloudinary must come before django.contrib.staticfiles
+    'cloudinary',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     # Third-party
@@ -103,16 +107,49 @@ TIME_ZONE = 'Africa/Nairobi'
 USE_I18N = True
 USE_TZ = True
 
-# Static files
+# Static files (served locally by WhiteNoise — not Cloudinary)
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# Media files
+# Media files — uploaded to Cloudinary
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Storage backends
+STORAGES = {
+    # All ImageField / FileField uploads go to Cloudinary
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    # Static files stay on local disk, served by WhiteNoise
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+# Cloudinary credentials (stored as Replit Secrets)
+cloudinary.config(
+    cloud_name=config('CLOUDINARY_CLOUD_NAME'),
+    api_key=config('CLOUDINARY_API_KEY'),
+    api_secret=config('CLOUDINARY_API_SECRET'),
+    secure=True,
+)
+
+# Cloudinary folder organisation per upload_to paths already defined in models:
+#   hero/ · gallery/ · menu/ · categories/ · testimonials/
+CLOUDINARY_STORAGE = {
+    'MEDIA_TAG': 'kawas',          # tags every upload with "kawas" for easy filtering
+    'INVALID_VIDEO_ERROR_MESSAGE': 'Please upload a valid image.',
+    'EXCLUDE_DELETE_ORPHANED_MEDIA_PATHS': (),
+    'STATIC_TAG': 'kawas-static',
+    'STATICFILES_MANIFEST_ROOT': BASE_DIR / 'staticfiles',
+}
+
+# django-imagekit: keep generated thumbnail cache files on local filesystem
+# so imagekit doesn't push every resized variant to Cloudinary
+IMAGEKIT_DEFAULT_CACHEFILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+IMAGEKIT_CACHEFILE_DIR = 'CACHE/images'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

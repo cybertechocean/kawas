@@ -1,2 +1,3 @@
 - [Django project setup](django-setup.md) — key decisions: SQLite dev, SESSION_SECRET as SECRET_KEY, no Tailwind build step (CDN), apps under apps/ subdirectory, admin at /kawas_admin/
 - [Seeding and data](seeding.md) — seed_data.py populates 12 categories, 119 items, 6 testimonials, 10 FAQs, 7 opening hours rows
+- [Cloudinary image storage](cloudinary-setup.md) — all ImageField uploads → Cloudinary; imagekit thumbnail cache kept local; INSTALLED_APPS order is critical
