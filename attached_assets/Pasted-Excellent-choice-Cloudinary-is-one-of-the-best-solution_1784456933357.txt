@@ -1,0 +1,137 @@
+Excellent choice. Cloudinary is one of the best solutions for a Django project like KAWA'S. Now the goal is to make Django automatically upload images to Cloudinary whenever you add them through /kawas_admin/.
+
+Step 1: Get Your Cloudinary Credentials
+Log in to your Cloudinary Dashboard and copy these values:
+Cloud Name
+API Key
+API Secret
+You'll find them on the dashboard homepage.
+
+Step 2: Install Required Packages
+In your virtual environment:
+pip install cloudinary django-cloudinary-storage
+
+Then save them:
+pip freeze > requirements.txt
+
+
+Step 3: Update settings.py
+Add the apps before django.contrib.staticfiles:
+INSTALLED_APPS = [
+    ...
+
+    "cloudinary",
+    "cloudinary_storage",
+
+    "django.contrib.staticfiles",
+
+    ...
+]
+
+
+Step 4: Configure Cloudinary
+import os
+import cloudinary
+
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+    secure=True,
+)
+
+
+Step 5: Configure Media Storage
+Still in settings.py:
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+This tells Django:
+User uploads → Cloudinary
+Static files → Normal Django static storage
+
+Step 6: Store Secrets Securely
+Create a .env file:
+CLOUDINARY_CLOUD_NAME=xxxxxxxx
+CLOUDINARY_API_KEY=xxxxxxxx
+CLOUDINARY_API_SECRET=xxxxxxxx
+
+If you're using python-decouple:
+from decouple import config
+
+cloudinary.config(
+    cloud_name=config("CLOUDINARY_CLOUD_NAME"),
+    api_key=config("CLOUDINARY_API_KEY"),
+    api_secret=config("CLOUDINARY_API_SECRET"),
+    secure=True,
+)
+
+Don't forget to add .env to .gitignore.
+
+Step 7: Restart Django
+python manage.py runserver
+
+
+Step 8: Test an Upload
+Go to:
+/kawas_admin/
+
+Open a model with an image field (e.g., Menu Item, Gallery, Hero Image), upload an image, and save.
+Then verify:
+The image appears in the admin.
+A new asset appears in your Cloudinary Media Library.
+The website displays the image correctly.
+
+Step 9: Organize Images into Folders (Highly Recommended)
+By default, uploads go into the root of your Cloudinary account. A cleaner approach is to organize them into folders such as:
+kawas/
+
+    hero/
+
+    gallery/
+
+    menu/
+
+    coffee/
+
+    desserts/
+
+    breakfast/
+
+    events/
+
+    staff/
+
+    testimonials/
+
+This makes management much easier as your library grows.
+
+Step 10: Enable Automatic Optimization
+When displaying images in templates, use Cloudinary's transformations to improve performance.
+For example, you can request resized, compressed, and modern-format images (such as WebP or AVIF) instead of serving the original upload. This significantly improves page speed, especially on mobile devices.
+
+Step 11: Bulk Upload Existing Photos
+If you already have dozens of café photos, you don't need to upload them one by one through the admin.
+You can:
+Upload them into the appropriate folders in Cloudinary.
+Then create the corresponding Django records (Menu Items, Gallery Images, Hero Slides, etc.) that reference those Cloudinary assets.
+For a large gallery, this is much faster than manual uploads.
+
+My Recommendation for KAWA'S
+Since your project is already complete, I'd proceed in this order:
+✅ Connect Django to Cloudinary.
+✅ Verify uploads from /kawas_admin/.
+✅ Create a clean folder structure in Cloudinary.
+✅ Upload all café photos (IN REPECTIVE FOLDERS).
+✅ Add the images to Menu Items, Gallery, Categories, and Hero Slides through the admin.
+✅ Replace any placeholder images with the real assets.
+✅ Run a final pass to ensure every page has optimized, high-quality imagery.
+This gives you a professional, maintainable setup where all future image management happens through the Django admin while Cloudinary handles storage, optimization, and delivery.
+
+
