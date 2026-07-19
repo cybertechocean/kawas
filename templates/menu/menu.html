@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Menu — KAWA'S Café{% endblock %}
+{% block meta_description %}Explore KAWA'S full menu — specialty coffees, matcha, frappes, fresh juices, milkshakes, Alcohol-Free Mojitos, and artisan desserts in Nyali, Mombasa.{% endblock %}
+
+{% block content %}
+<div class="h-[112px] md:h-[120px]"></div>
+
+<!-- Page Hero -->
+<section class="py-16 bg-espresso-800 dark:bg-espresso-950 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="geo" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse"><circle cx="40" cy="40" r="2" fill="#D4A94A"/><path d="M0 40 L40 0 L80 40 L40 80 Z" fill="none" stroke="#D4A94A" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#geo)"/></svg>
+  </div>
+  <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+    <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-4 block">KAWA'S Café</span>
+    <h1 class="font-display text-5xl md:text-6xl font-semibold text-latte mb-4">Our Menu</h1>
+    <p class="text-latte/70 text-lg max-w-xl mx-auto">Handcrafted beverages, artisan desserts, and fresh breakfast — crafted with love, served with excellence.</p>
+    <div class="flex flex-wrap items-center justify-center gap-3 mt-6">
+      <span class="inline-flex items-center gap-1.5 bg-sage/20 border border-sage/40 text-sage text-xs font-medium px-3 py-1.5 rounded-full">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>Halal Certified
+      </span>
+      <span class="inline-flex items-center gap-1.5 bg-sage/20 border border-sage/40 text-sage text-xs font-medium px-3 py-1.5 rounded-full">
+        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>100% Alcohol-Free
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- Sticky Search & Filter Bar -->
+<div class="sticky top-[112px] md:top-[120px] z-30 bg-latte/95 dark:bg-dark-bg/95 backdrop-blur-md border-b border-espresso-100 dark:border-espresso-800 shadow-luxury-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+    <!-- Search -->
+    <div class="relative mb-3">
+      <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-espresso-400"></i>
+      <input type="text"
+             name="q"
+             placeholder="Search menu items..."
+             value="{{ search_query }}"
+             hx-get="/menu/search/"
+             hx-trigger="keyup changed delay:300ms"
+             hx-target="#menu-results"
+             hx-include="this"
+             class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-dark-card border border-espresso-200 dark:border-espresso-700 rounded-input text-sm text-espresso-800 dark:text-latte focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-colors">
+    </div>
+
+    <!-- Category Pills - horizontal scroll -->
+    <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+      <a href="/menu/" class="cat-pill shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 {% if not active_category %}active{% else %}bg-espresso-100 dark:bg-espresso-800 text-espresso-700 dark:text-latte hover:bg-espresso-200{% endif %}">
+        All Items
+      </a>
+      {% for category in categories %}
+      <a href="/menu/category/{{ category.slug }}/"
+         class="cat-pill shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 {% if active_category.slug == category.slug %}active{% else %}bg-espresso-100 dark:bg-espresso-800 text-espresso-700 dark:text-latte hover:bg-espresso-200 dark:hover:bg-espresso-700{% endif %}">
+        {% if category.emoji %}{{ category.emoji }} {% endif %}{{ category.name }}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- Menu Content -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10" id="menu-results">
+  {% if search_query %}
+  <p class="text-sm text-espresso-500 dark:text-latte/60 mb-6">
+    Showing results for "<strong class="text-espresso-800 dark:text-latte">{{ search_query }}</strong>" — {{ items|length }} item{{ items|length|pluralize }} found
+  </p>
+  {% endif %}
+
+  {% if active_category %}
+  <!-- Category Header -->
+  <div class="mb-8">
+    <h2 class="font-display text-3xl font-semibold text-espresso-800 dark:text-latte mb-2">{{ active_category.name }}</h2>
+    {% if active_category.short_description %}
+    <p class="text-espresso-500 dark:text-latte/60">{{ active_category.short_description }}</p>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if items %}
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    {% for item in items %}
+    {% include 'partials/menu_card.html' with item=item %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="text-center py-20">
+    <i data-lucide="search-x" class="w-16 h-16 text-espresso-200 dark:text-espresso-700 mx-auto mb-4"></i>
+    <h3 class="font-display text-2xl text-espresso-700 dark:text-latte mb-2">No items found</h3>
+    <p class="text-espresso-400 dark:text-latte/50">Try a different search or browse our categories</p>
+    <a href="/menu/" class="inline-flex items-center gap-2 mt-6 bg-espresso-800 text-latte px-6 py-3 rounded-btn text-sm font-semibold transition-colors hover:bg-espresso-900">
+      View All Items
+    </a>
+  </div>
+  {% endif %}
+
+  <!-- QR Code section -->
+  {% if not active_category and not search_query %}
+  <div class="mt-16 p-8 bg-white dark:bg-dark-card rounded-card shadow-luxury-sm flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+    <img src="{% static 'img/kawas-menu-qr.png' %}" alt="KAWA'S Menu QR Code" class="w-28 h-28 bg-white p-2 rounded-xl shrink-0">
+    <div>
+      <h3 class="font-display text-2xl font-semibold text-espresso-800 dark:text-latte mb-2">Scan Our Menu QR Code</h3>
+      <p class="text-espresso-500 dark:text-latte/60 text-sm mb-4">Print and display this QR code for quick access to our full digital menu.</p>
+      <a href="https://wa.me/254119000999" target="_blank" class="inline-flex items-center gap-2 btn-wa text-white text-sm font-semibold px-5 py-2.5 rounded-btn transition-opacity hover:opacity-90">
+        Order via WhatsApp
+      </a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

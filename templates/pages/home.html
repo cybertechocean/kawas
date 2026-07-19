@@ -1,0 +1,368 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}KAWA'S Café — Premium Coffee & Desserts in Nyali, Mombasa{% endblock %}
+
+{% block content %}
+<!-- Spacer for navbar -->
+<div class="h-[112px] md:h-[120px]"></div>
+
+<!-- HERO SECTION -->
+<section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-espresso-900 dark:bg-espresso-950">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="geo" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse"><circle cx="40" cy="40" r="2" fill="#D4A94A"/><path d="M0 40 L40 0 L80 40 L40 80 Z" fill="none" stroke="#D4A94A" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#geo)"/></svg>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center py-24">
+
+    <!-- Halal Badge -->
+    <div class="inline-flex items-center gap-2 bg-sage/20 border border-sage/40 text-sage text-sm font-medium px-4 py-2 rounded-full mb-8 animate-fade-in">
+      <span class="w-2 h-2 rounded-full bg-sage animate-pulse-slow"></span>
+      Halal Certified · 100% Alcohol-Free
+    </div>
+
+    <!-- Steam Animation -->
+    <div class="flex justify-center gap-3 mb-4 opacity-60">
+      <div class="w-0.5 h-8 bg-gold/50 rounded-full steam-line"></div>
+      <div class="w-0.5 h-10 bg-gold/50 rounded-full steam-line"></div>
+      <div class="w-0.5 h-6 bg-gold/50 rounded-full steam-line"></div>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold text-latte leading-[1.05] mb-6 animate-fade-up">
+      Crafted With Love.<br>
+      <span class="text-gold italic">Served With Excellence.</span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-latte/70 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up" style="animation-delay:0.2s">
+      Premium Specialty Coffee · Artisan Matcha · Signature Desserts<br class="hidden sm:block">
+      & Halal Dining Experience in Nyali, Mombasa
+    </p>
+
+    <!-- CTA Buttons -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up" style="animation-delay:0.3s">
+      <a href="/menu/" class="inline-flex items-center gap-2 bg-gold hover:bg-[#C08A2A] text-espresso-900 font-bold text-base px-8 py-4 rounded-btn shadow-luxury-md transition-all duration-200 hover:-translate-y-1 hover:shadow-luxury">
+        <i data-lucide="coffee" class="w-5 h-5"></i>
+        Explore Our Menu
+      </a>
+      <a href="https://wa.me/254119000999" target="_blank" class="inline-flex items-center gap-2 btn-wa text-white font-bold text-base px-8 py-4 rounded-btn shadow-luxury-md transition-all duration-200 hover:-translate-y-1 hover:shadow-luxury">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Order on WhatsApp
+      </a>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="mt-16 flex flex-col items-center gap-2 opacity-50 animate-bounce">
+      <span class="text-latte text-xs tracking-widest uppercase">Scroll to explore</span>
+      <i data-lucide="chevron-down" class="w-4 h-4 text-gold"></i>
+    </div>
+  </div>
+</section>
+
+<!-- HALAL TRUST SECTION -->
+<section class="py-12 bg-white dark:bg-dark-card">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
+      {% for badge in trust_badges %}{% endfor %}
+      <div class="flex flex-col items-center text-center p-4 reveal">
+        <div class="w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center mb-3">
+          <i data-lucide="shield-check" class="w-6 h-6 text-sage"></i>
+        </div>
+        <span class="text-sm font-semibold text-espresso-800 dark:text-latte">Halal Certified</span>
+      </div>
+      <div class="flex flex-col items-center text-center p-4 reveal">
+        <div class="w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center mb-3">
+          <i data-lucide="check-circle" class="w-6 h-6 text-sage"></i>
+        </div>
+        <span class="text-sm font-semibold text-espresso-800 dark:text-latte">100% Alcohol-Free</span>
+      </div>
+      <div class="flex flex-col items-center text-center p-4 reveal">
+        <div class="w-12 h-12 rounded-full bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center mb-3">
+          <i data-lucide="coffee" class="w-6 h-6 text-espresso-800 dark:text-gold"></i>
+        </div>
+        <span class="text-sm font-semibold text-espresso-800 dark:text-latte">Specialty Coffee</span>
+      </div>
+      <div class="flex flex-col items-center text-center p-4 reveal">
+        <div class="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center mb-3">
+          <i data-lucide="sparkles" class="w-6 h-6 text-gold"></i>
+        </div>
+        <span class="text-sm font-semibold text-espresso-800 dark:text-latte">Freshly Prepared</span>
+      </div>
+      <div class="flex flex-col items-center text-center p-4 reveal col-span-2 md:col-span-1">
+        <div class="w-12 h-12 rounded-full bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center mb-3">
+          <i data-lucide="users" class="w-6 h-6 text-espresso-800 dark:text-gold"></i>
+        </div>
+        <span class="text-sm font-semibold text-espresso-800 dark:text-latte">Family Friendly</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED CATEGORIES -->
+<section class="py-20 px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-3 block">Our Menu</span>
+      <h2 class="font-display text-4xl md:text-5xl font-semibold text-espresso-800 dark:text-latte mb-4">
+        What We Serve
+      </h2>
+      <p class="text-espresso-500 dark:text-latte/60 max-w-xl mx-auto">From premium specialty coffees to artisan desserts — every item crafted with care.</p>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      {% for category in categories %}
+      <a href="{{ category.get_absolute_url }}" class="group flex flex-col items-center text-center p-5 bg-white dark:bg-dark-card rounded-card shadow-luxury-sm hover:shadow-luxury transition-all duration-300 hover:-translate-y-2 reveal">
+        <div class="w-14 h-14 rounded-full bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center mb-3 group-hover:bg-gold group-hover:scale-110 transition-all duration-300">
+          {% if category.emoji %}
+          <span class="text-2xl">{{ category.emoji }}</span>
+          {% elif category.image %}
+          <img src="{{ category.image.url }}" alt="{{ category.name }}" class="w-full h-full object-cover rounded-full">
+          {% else %}
+          <i data-lucide="coffee" class="w-7 h-7 text-espresso-700 dark:text-gold group-hover:text-espresso-900"></i>
+          {% endif %}
+        </div>
+        <span class="font-semibold text-sm text-espresso-800 dark:text-latte group-hover:text-gold transition-colors">{{ category.name }}</span>
+      </a>
+      {% empty %}
+      <div class="flex flex-col items-center text-center p-5 bg-white dark:bg-dark-card rounded-card shadow-luxury-sm reveal"><div class="text-3xl mb-3">☕</div><span class="font-semibold text-sm text-espresso-800 dark:text-latte">Hot Coffee</span></div>
+      <div class="flex flex-col items-center text-center p-5 bg-white dark:bg-dark-card rounded-card shadow-luxury-sm reveal"><div class="text-3xl mb-3">🧊</div><span class="font-semibold text-sm text-espresso-800 dark:text-latte">Iced Coffee</span></div>
+      <div class="flex flex-col items-center text-center p-5 bg-white dark:bg-dark-card rounded-card shadow-luxury-sm reveal"><div class="text-3xl mb-3">🍵</div><span class="font-semibold text-sm text-espresso-800 dark:text-latte">Matcha</span></div>
+      <div class="flex flex-col items-center text-center p-5 bg-white dark:bg-dark-card rounded-card shadow-luxury-sm reveal"><div class="text-3xl mb-3">🥤</div><span class="font-semibold text-sm text-espresso-800 dark:text-latte">Frappes</span></div>
+      <div class="flex flex-col items-center text-center p-5 bg-white dark:bg-dark-card rounded-card shadow-luxury-sm reveal"><div class="text-3xl mb-3">🧃</div><span class="font-semibold text-sm text-espresso-800 dark:text-latte">Fresh Juices</span></div>
+      <div class="flex flex-col items-center text-center p-5 bg-white dark:bg-dark-card rounded-card shadow-luxury-sm reveal"><div class="text-3xl mb-3">🥛</div><span class="font-semibold text-sm text-espresso-800 dark:text-latte">Milkshakes</span></div>
+      <div class="flex flex-col items-center text-center p-5 bg-white dark:bg-dark-card rounded-card shadow-luxury-sm reveal"><div class="text-3xl mb-3">🍹</div><span class="font-semibold text-sm text-espresso-800 dark:text-latte">Mojitos</span></div>
+      <div class="flex flex-col items-center text-center p-5 bg-white dark:bg-dark-card rounded-card shadow-luxury-sm reveal"><div class="text-3xl mb-3">🍰</div><span class="font-semibold text-sm text-espresso-800 dark:text-latte">Desserts</span></div>
+      <div class="flex flex-col items-center text-center p-5 bg-white dark:bg-dark-card rounded-card shadow-luxury-sm reveal"><div class="text-3xl mb-3">🥐</div><span class="font-semibold text-sm text-espresso-800 dark:text-latte">Breakfast</span></div>
+      <div class="flex flex-col items-center text-center p-5 bg-white dark:bg-dark-card rounded-card shadow-luxury-sm reveal"><div class="text-3xl mb-3">🌿</div><span class="font-semibold text-sm text-espresso-800 dark:text-latte">Smoothies</span></div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-10 reveal">
+      <a href="/menu/" class="inline-flex items-center gap-2 border-2 border-espresso-800 dark:border-latte text-espresso-800 dark:text-latte hover:bg-espresso-800 dark:hover:bg-latte hover:text-latte dark:hover:text-espresso-900 font-semibold px-8 py-3.5 rounded-btn transition-all duration-200">
+        View Full Menu <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE COLLECTION -->
+{% if featured_items %}
+<section class="py-20 bg-white dark:bg-dark-card px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-3 block">Our Specialties</span>
+      <h2 class="font-display text-4xl md:text-5xl font-semibold text-espresso-800 dark:text-latte mb-4">
+        Signature Collection
+      </h2>
+      <p class="text-espresso-500 dark:text-latte/60 max-w-xl mx-auto">Handpicked favorites — the items our customers come back for, again and again.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for item in featured_items %}
+      {% include 'partials/menu_card.html' with item=item %}
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-12 reveal">
+      <a href="/menu/" class="inline-flex items-center gap-2 bg-espresso-800 hover:bg-espresso-900 text-latte font-semibold px-8 py-3.5 rounded-btn transition-all duration-200 hover:shadow-luxury-sm hover:-translate-y-0.5">
+        See Full Menu <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ABOUT STRIP -->
+<section class="py-20 px-4 sm:px-6 bg-espresso-800 dark:bg-espresso-950 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-5">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="geo2" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="1.5" fill="#D4A94A"/></pattern></defs><rect width="100%" height="100%" fill="url(#geo2)"/></svg>
+  </div>
+  <div class="max-w-4xl mx-auto text-center relative z-10">
+    <div class="text-5xl mb-6">☕</div>
+    <h2 class="font-display text-4xl md:text-5xl text-latte font-semibold mb-6 reveal">
+      Inspired by Dubai & Istanbul.<br>
+      <span class="text-gold italic">Rooted in Mombasa.</span>
+    </h2>
+    <p class="text-latte/70 text-lg leading-relaxed mb-8 reveal max-w-2xl mx-auto">
+      KAWA'S Café is a premium Halal-certified specialty coffee house in Nyali, Mombasa. We blend the elegance of world-class café culture with the warmth of coastal Kenyan hospitality — every cup crafted with love, every guest welcomed like family.
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal">
+      <a href="/about/" class="inline-flex items-center gap-2 bg-gold hover:bg-[#C08A2A] text-espresso-900 font-bold px-7 py-3.5 rounded-btn transition-all duration-200 hover:-translate-y-0.5">
+        Our Story <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+      <a href="/visit-us/" class="inline-flex items-center gap-2 border-2 border-latte/30 text-latte hover:border-gold hover:text-gold font-semibold px-7 py-3.5 rounded-btn transition-all duration-200">
+        <i data-lucide="map-pin" class="w-4 h-4"></i>
+        Find Us
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE KAWA'S -->
+<section class="py-20 px-4 sm:px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-3 block">Why KAWA'S</span>
+      <h2 class="font-display text-4xl md:text-5xl font-semibold text-espresso-800 dark:text-latte">
+        More Than Just Coffee
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for reason in why_reasons %}{% endfor %}
+      <div class="bg-white dark:bg-dark-card p-6 rounded-card shadow-luxury-sm reveal text-center">
+        <div class="w-12 h-12 mx-auto rounded-full bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center mb-4">
+          <i data-lucide="award" class="w-6 h-6 text-espresso-800 dark:text-gold"></i>
+        </div>
+        <h3 class="font-display font-semibold text-lg text-espresso-800 dark:text-latte mb-2">Premium Beans</h3>
+        <p class="text-sm text-espresso-500 dark:text-latte/60">Carefully selected specialty coffee beans from the finest origins.</p>
+      </div>
+      <div class="bg-white dark:bg-dark-card p-6 rounded-card shadow-luxury-sm reveal text-center">
+        <div class="w-12 h-12 mx-auto rounded-full bg-sage/10 flex items-center justify-center mb-4">
+          <i data-lucide="shield-check" class="w-6 h-6 text-sage"></i>
+        </div>
+        <h3 class="font-display font-semibold text-lg text-espresso-800 dark:text-latte mb-2">Halal Certified</h3>
+        <p class="text-sm text-espresso-500 dark:text-latte/60">Proudly halal-certified with 100% alcohol-free drinks and desserts.</p>
+      </div>
+      <div class="bg-white dark:bg-dark-card p-6 rounded-card shadow-luxury-sm reveal text-center">
+        <div class="w-12 h-12 mx-auto rounded-full bg-gold/10 flex items-center justify-center mb-4">
+          <i data-lucide="wifi" class="w-6 h-6 text-gold"></i>
+        </div>
+        <h3 class="font-display font-semibold text-lg text-espresso-800 dark:text-latte mb-2">Free Wi-Fi</h3>
+        <p class="text-sm text-espresso-500 dark:text-latte/60">Fast & reliable Wi-Fi — perfect for students and remote workers.</p>
+      </div>
+      <div class="bg-white dark:bg-dark-card p-6 rounded-card shadow-luxury-sm reveal text-center">
+        <div class="w-12 h-12 mx-auto rounded-full bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center mb-4">
+          <i data-lucide="camera" class="w-6 h-6 text-espresso-800 dark:text-gold"></i>
+        </div>
+        <h3 class="font-display font-semibold text-lg text-espresso-800 dark:text-latte mb-2">Instagram-Worthy</h3>
+        <p class="text-sm text-espresso-500 dark:text-latte/60">Beautiful café ambience and Instagram-worthy food presentation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY STRIP -->
+{% if gallery_images %}
+<section class="py-20 bg-white dark:bg-dark-card px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-3 block">@kawa_ske</span>
+      <h2 class="font-display text-4xl md:text-5xl font-semibold text-espresso-800 dark:text-latte mb-4">Our Gallery</h2>
+      <p class="text-espresso-500 dark:text-latte/60">Real moments from our café — follow us on Instagram for daily inspiration.</p>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {% for img in gallery_images %}
+      <a href="/gallery/" class="group aspect-square overflow-hidden rounded-card block reveal">
+        <img src="{{ img.image.url }}" alt="{{ img.title|default:'KAWA Café' }}" loading="lazy"
+             class="w-full h-full object-cover transition-all duration-500 group-hover:scale-110">
+      </a>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-10 reveal">
+      <a href="/gallery/" class="inline-flex items-center gap-2 border-2 border-espresso-800 dark:border-latte text-espresso-800 dark:text-latte hover:bg-espresso-800 dark:hover:bg-latte hover:text-latte dark:hover:text-espresso-900 font-semibold px-8 py-3.5 rounded-btn transition-all duration-200">
+        View Full Gallery <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- TESTIMONIALS -->
+{% if testimonials %}
+<section class="py-20 px-4 sm:px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-3 block">Reviews</span>
+      <h2 class="font-display text-4xl md:text-5xl font-semibold text-espresso-800 dark:text-latte">What Our Guests Say</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for review in testimonials %}
+      <div class="bg-white dark:bg-dark-card p-6 rounded-card shadow-luxury-sm reveal">
+        <div class="flex items-center gap-1 mb-3">
+          {% for i in "12345" %}
+          <i data-lucide="star" class="w-4 h-4 {% if forloop.counter <= review.rating %}text-gold fill-gold{% else %}text-espresso-200{% endif %}"></i>
+          {% endfor %}
+        </div>
+        <p class="text-espresso-600 dark:text-latte/70 text-sm leading-relaxed mb-4 italic">"{{ review.review }}"</p>
+        <div class="flex items-center gap-3">
+          {% if review.avatar %}
+          <img src="{{ review.avatar.url }}" alt="{{ review.name }}" class="w-10 h-10 rounded-full object-cover">
+          {% else %}
+          <div class="w-10 h-10 rounded-full bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center">
+            <i data-lucide="user" class="w-5 h-5 text-espresso-600"></i>
+          </div>
+          {% endif %}
+          <div>
+            <div class="font-semibold text-sm text-espresso-800 dark:text-latte">{{ review.name }}</div>
+            <div class="text-xs text-espresso-400 dark:text-latte/50">{{ review.title|default:review.source }}</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- VISIT US STRIP -->
+<section class="py-20 bg-white dark:bg-dark-card px-4 sm:px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-3 block">Find Us</span>
+        <h2 class="font-display text-4xl font-semibold text-espresso-800 dark:text-latte mb-6">Visit KAWA'S</h2>
+        <div class="space-y-4">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="map-pin" class="w-5 h-5 text-espresso-800 dark:text-gold"></i>
+            </div>
+            <div>
+              <div class="font-semibold text-espresso-800 dark:text-latte">Location</div>
+              <div class="text-espresso-500 dark:text-latte/60 text-sm">Mount Kenya Road, Nyali, Mombasa, Kenya</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center shrink-0">
+              <i data-lucide="clock" class="w-5 h-5 text-espresso-800 dark:text-gold"></i>
+            </div>
+            <div>
+              <div class="font-semibold text-espresso-800 dark:text-latte">Opening Hours</div>
+              <div class="text-espresso-500 dark:text-latte/60 text-sm">Mon – Fri: 6 AM – 11 PM</div>
+              <div class="text-espresso-500 dark:text-latte/60 text-sm">Sat – Sun: 6 AM – 12 Midnight</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center shrink-0">
+              <i data-lucide="phone" class="w-5 h-5 text-espresso-800 dark:text-gold"></i>
+            </div>
+            <div>
+              <div class="font-semibold text-espresso-800 dark:text-latte">Phone / WhatsApp</div>
+              <a href="tel:+254119000999" class="text-gold hover:underline text-sm">+254 119 000 999</a>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-3 mt-8">
+          <a href="https://maps.google.com/?q=Kawa's+Nyali+Mombasa" target="_blank" class="inline-flex items-center gap-2 bg-espresso-800 hover:bg-espresso-900 text-latte font-semibold px-6 py-3 rounded-btn transition-all duration-200 hover:shadow-luxury-sm text-sm">
+            <i data-lucide="navigation" class="w-4 h-4"></i>
+            Get Directions
+          </a>
+          <a href="https://wa.me/254119000999" target="_blank" class="inline-flex items-center gap-2 btn-wa text-white font-semibold px-6 py-3 rounded-btn transition-all duration-200 text-sm">
+            WhatsApp Order
+          </a>
+        </div>
+      </div>
+      <div class="reveal rounded-card overflow-hidden shadow-luxury aspect-video bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center">
+        <div class="text-center">
+          <i data-lucide="map" class="w-16 h-16 text-espresso-300 dark:text-espresso-600 mx-auto mb-3"></i>
+          <p class="text-espresso-500 text-sm">Mount Kenya Road, Nyali, Mombasa</p>
+          <a href="https://maps.google.com/?q=Kawa's+Nyali+Mombasa" target="_blank" class="text-gold text-sm hover:underline mt-2 block">Open in Google Maps →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

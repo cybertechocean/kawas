@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Visit Us — KAWA'S Café, Nyali Mombasa{% endblock %}
+{% block meta_description %}Find KAWA'S Café at Mount Kenya Road, Nyali, Mombasa. Get directions, opening hours, phone number, and WhatsApp contact.{% endblock %}
+
+{% block content %}
+<div class="h-[112px] md:h-[120px]"></div>
+
+<!-- Hero -->
+<section class="py-20 bg-espresso-800 dark:bg-espresso-950 relative overflow-hidden">
+  <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+    <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-4 block">Find Us</span>
+    <h1 class="font-display text-5xl md:text-6xl font-semibold text-latte mb-4">Visit KAWA'S</h1>
+    <p class="text-latte/70 text-lg max-w-xl mx-auto">We're located in the heart of Nyali, Mombasa — come visit us and experience the KAWA'S difference.</p>
+  </div>
+</section>
+
+<section class="py-16 px-4 sm:px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+      <!-- Info Column -->
+      <div class="space-y-8">
+
+        <!-- Address -->
+        <div class="bg-white dark:bg-dark-card rounded-card p-6 shadow-luxury-sm reveal">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center shrink-0">
+              <i data-lucide="map-pin" class="w-6 h-6 text-espresso-800 dark:text-gold"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-espresso-800 dark:text-latte mb-1">Our Location</h3>
+              <p class="text-espresso-600 dark:text-latte/70 text-sm">Mount Kenya Road<br>Nyali, Mombasa<br>Kenya</p>
+              <a href="https://maps.google.com/?q=Kawa's+Nyali+Mombasa" target="_blank" class="inline-flex items-center gap-1.5 text-gold text-sm font-medium mt-3 hover:underline">
+                <i data-lucide="navigation" class="w-3.5 h-3.5"></i>Get Directions
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Opening Hours -->
+        <div class="bg-white dark:bg-dark-card rounded-card p-6 shadow-luxury-sm reveal">
+          <div class="flex items-start gap-4 mb-5">
+            <div class="w-12 h-12 rounded-full bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center shrink-0">
+              <i data-lucide="clock" class="w-6 h-6 text-espresso-800 dark:text-gold"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-espresso-800 dark:text-latte">Opening Hours</h3>
+              <p class="text-xs text-espresso-400 dark:text-latte/50">We're open most days of the year</p>
+            </div>
+          </div>
+          {% if opening_hours %}
+          <div class="space-y-2">
+            {% for hours in opening_hours %}
+            <div class="flex items-center justify-between py-2 border-b border-espresso-100 dark:border-espresso-800 last:border-0">
+              <span class="text-sm font-medium text-espresso-700 dark:text-latte">{{ hours.get_day_display }}</span>
+              <span class="text-sm text-espresso-500 dark:text-latte/60">
+                {% if hours.is_closed %}
+                <span class="text-red-500">Closed</span>
+                {% else %}
+                {{ hours.open_time|time:"g:i A" }} – {{ hours.close_time|time:"g:i A" }}
+                {% if hours.note %}<span class="text-xs text-gold ml-1">({{ hours.note }})</span>{% endif %}
+                {% endif %}
+              </span>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="space-y-2">
+            <div class="flex justify-between py-2 border-b border-espresso-100 dark:border-espresso-800">
+              <span class="text-sm font-medium text-espresso-700 dark:text-latte">Monday – Friday</span>
+              <span class="text-sm text-espresso-500 dark:text-latte/60">6:00 AM – 11:00 PM</span>
+            </div>
+            <div class="flex justify-between py-2">
+              <span class="text-sm font-medium text-espresso-700 dark:text-latte">Saturday – Sunday</span>
+              <span class="text-sm text-espresso-500 dark:text-latte/60">6:00 AM – 12:00 Midnight</span>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Contact -->
+        <div class="bg-white dark:bg-dark-card rounded-card p-6 shadow-luxury-sm reveal">
+          <h3 class="font-semibold text-espresso-800 dark:text-latte mb-4 flex items-center gap-2">
+            <i data-lucide="phone" class="w-5 h-5 text-gold"></i>Contact Us
+          </h3>
+          <div class="space-y-3">
+            <a href="tel:+254119000999" class="flex items-center gap-3 py-2 text-sm text-espresso-700 dark:text-latte/70 hover:text-gold transition-colors">
+              <i data-lucide="phone" class="w-4 h-4 text-gold"></i>+254 119 000 999
+            </a>
+            <a href="https://wa.me/254119000999" target="_blank" class="flex items-center gap-3 py-2 text-sm text-espresso-700 dark:text-latte/70 hover:text-gold transition-colors">
+              <i data-lucide="message-circle" class="w-4 h-4 text-gold"></i>WhatsApp: +254 119 000 999
+            </a>
+            <a href="https://instagram.com/kawa_ske" target="_blank" class="flex items-center gap-3 py-2 text-sm text-espresso-700 dark:text-latte/70 hover:text-gold transition-colors">
+              <i data-lucide="instagram" class="w-4 h-4 text-gold"></i>@kawa_ske
+            </a>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="flex flex-col sm:flex-row gap-3 reveal">
+          <a href="https://maps.google.com/?q=Kawa's+Nyali+Mombasa" target="_blank" class="flex-1 flex items-center justify-center gap-2 bg-espresso-800 hover:bg-espresso-900 text-latte font-bold py-4 rounded-btn transition-all duration-200 hover:shadow-luxury-sm text-sm">
+            <i data-lucide="navigation" class="w-4 h-4"></i>Get Directions
+          </a>
+          <a href="https://wa.me/254119000999" target="_blank" class="flex-1 flex items-center justify-center gap-2 btn-wa text-white font-bold py-4 rounded-btn transition-opacity hover:opacity-90 text-sm">
+            💬 WhatsApp Order
+          </a>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="reveal">
+        <div class="bg-white dark:bg-dark-card rounded-card overflow-hidden shadow-luxury aspect-video flex items-center justify-center">
+          <div class="text-center p-8">
+            <i data-lucide="map" class="w-16 h-16 text-espresso-200 dark:text-espresso-700 mx-auto mb-4"></i>
+            <h3 class="font-display text-xl text-espresso-700 dark:text-latte mb-2">KAWA'S Café</h3>
+            <p class="text-espresso-500 dark:text-latte/60 text-sm mb-4">Mount Kenya Road, Nyali, Mombasa</p>
+            <a href="https://maps.google.com/?q=Kawa's+Café+Nyali+Mombasa" target="_blank" class="inline-flex items-center gap-2 bg-espresso-800 text-latte text-sm font-semibold px-5 py-2.5 rounded-btn hover:bg-espresso-900 transition-colors">
+              <i data-lucide="external-link" class="w-4 h-4"></i>Open in Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Breakfast Menu — KAWA'S Café{% endblock %}
+{% block meta_description %}Start your morning right at KAWA'S Café with our freshly prepared breakfast menu in Nyali, Mombasa.{% endblock %}
+
+{% block content %}
+<div class="h-[112px] md:h-[120px]"></div>
+
+<section class="py-20 bg-espresso-800 dark:bg-espresso-950 relative overflow-hidden">
+  <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+    <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-4 block">Morning Favourites</span>
+    <h1 class="font-display text-5xl md:text-6xl font-semibold text-latte mb-4">🥐 Breakfast Menu</h1>
+    <p class="text-latte/70 text-lg max-w-xl mx-auto">Start your day the KAWA'S way — freshly prepared breakfast paired with our signature coffees.</p>
+    <div class="flex items-center justify-center gap-3 mt-6">
+      <span class="inline-flex items-center gap-1.5 bg-sage/20 border border-sage/40 text-sage text-xs font-medium px-3 py-1.5 rounded-full">
+        <i data-lucide="clock" class="w-3.5 h-3.5"></i>Served from 6 AM
+      </span>
+      <span class="inline-flex items-center gap-1.5 bg-sage/20 border border-sage/40 text-sage text-xs font-medium px-3 py-1.5 rounded-full">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>Halal Certified
+      </span>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto">
+    {% if items %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {% for item in items %}
+      {% include 'partials/menu_card.html' with item=item %}
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-20">
+      <div class="text-6xl mb-6">🥐</div>
+      <h2 class="font-display text-3xl font-semibold text-espresso-800 dark:text-latte mb-4">Coming Soon</h2>
+      <p class="text-espresso-500 dark:text-latte/60 mb-6 max-w-md mx-auto">Our breakfast menu is being updated. Please visit us or WhatsApp for the latest offerings.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="https://wa.me/254119000999" target="_blank" class="inline-flex items-center gap-2 btn-wa text-white font-bold px-7 py-3.5 rounded-btn transition-opacity hover:opacity-90">
+          💬 WhatsApp for Breakfast Menu
+        </a>
+        <a href="/visit-us/" class="inline-flex items-center gap-2 border-2 border-espresso-800 dark:border-latte text-espresso-800 dark:text-latte hover:bg-espresso-800 dark:hover:bg-latte hover:text-latte dark:hover:text-espresso-900 font-semibold px-7 py-3.5 rounded-btn transition-all duration-200">
+          <i data-lucide="map-pin" class="w-4 h-4"></i>Visit Us
+        </a>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Pair with coffee promo -->
+    <div class="mt-12 p-8 bg-espresso-800 dark:bg-espresso-950 rounded-card text-center">
+      <h3 class="font-display text-2xl text-latte mb-2">Pair with Our Signature Coffees ☕</h3>
+      <p class="text-latte/70 text-sm mb-5">Every breakfast item pairs beautifully with our specialty coffees, matcha, or fresh juices.</p>
+      <a href="/menu/" class="inline-flex items-center gap-2 bg-gold hover:bg-[#C08A2A] text-espresso-900 font-bold px-6 py-3 rounded-btn transition-all duration-200">
+        Explore Full Menu <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

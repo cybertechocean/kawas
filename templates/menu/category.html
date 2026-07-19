@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ category.name }} — KAWA'S Café Menu{% endblock %}
+{% block meta_description %}{{ meta_description }}{% endblock %}
+
+{% block content %}
+<div class="h-[112px] md:h-[120px]"></div>
+
+<section class="py-16 bg-espresso-800 dark:bg-espresso-950 relative overflow-hidden">
+  <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+    <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-3 block">{{ category.name }}</span>
+    <h1 class="font-display text-5xl md:text-6xl font-semibold text-latte mb-4">
+      {% if category.emoji %}{{ category.emoji }} {% endif %}{{ category.name }}
+    </h1>
+    {% if category.short_description %}
+    <p class="text-latte/70 text-lg max-w-xl mx-auto">{{ category.short_description }}</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Category Pills -->
+<div class="sticky top-[112px] md:top-[120px] z-30 bg-latte/95 dark:bg-dark-bg/95 backdrop-blur-md border-b border-espresso-100 dark:border-espresso-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+    <div class="flex gap-2 overflow-x-auto pb-1">
+      <a href="/menu/" class="cat-pill shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold bg-espresso-100 dark:bg-espresso-800 text-espresso-700 dark:text-latte hover:bg-espresso-200">All Items</a>
+      {% for cat in categories %}
+      <a href="{{ cat.get_absolute_url }}"
+         class="cat-pill shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 {% if cat.slug == category.slug %}active{% else %}bg-espresso-100 dark:bg-espresso-800 text-espresso-700 dark:text-latte hover:bg-espresso-200 dark:hover:bg-espresso-700{% endif %}">
+        {% if cat.emoji %}{{ cat.emoji }} {% endif %}{{ cat.name }}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+  {% if items %}
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    {% for item in items %}
+    {% include 'partials/menu_card.html' with item=item %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="text-center py-20">
+    <i data-lucide="coffee" class="w-16 h-16 text-espresso-200 dark:text-espresso-700 mx-auto mb-4"></i>
+    <h3 class="font-display text-2xl text-espresso-700 dark:text-latte mb-2">No items yet</h3>
+    <p class="text-espresso-400 dark:text-latte/50">Items are being added to this category.</p>
+    <a href="https://wa.me/254119000999" target="_blank" class="inline-flex items-center gap-2 mt-6 btn-wa text-white px-6 py-3 rounded-btn text-sm font-semibold">
+      💬 Ask on WhatsApp
+    </a>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

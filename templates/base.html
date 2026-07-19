@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true', mobileMenuOpen: false }" x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))" :class="{ 'dark': darkMode }">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  {% block meta %}
+  <title>{% block title %}{% if page_title %}{{ page_title }} — KAWA'S Café{% else %}KAWA'S Café — Premium Coffee & Desserts in Nyali, Mombasa{% endif %}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{% if meta_description %}{{ meta_description }}{% else %}KAWA'S Café offers premium specialty coffee, artisan matcha, halal desserts, and a luxury café experience in Nyali, Mombasa, Kenya.{% endif %}{% endblock %}">
+  <meta name="keywords" content="KAWA'S Café, specialty coffee Mombasa, halal café Kenya, coffee shop Nyali, matcha Mombasa, artisan desserts Mombasa">
+  <meta name="author" content="KAWA'S Café">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{% block og_title %}KAWA'S Café — Premium Coffee & Desserts in Nyali, Mombasa{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}Premium specialty coffee, halal-certified artisan desserts, and a luxury café experience in Nyali, Mombasa.{% endblock %}">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  <meta property="og:site_name" content="KAWA'S Café">
+  <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}/static/img/kawas-logo.png{% endblock %}">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KAWA'S Café">
+  <meta name="twitter:description" content="Premium specialty coffee & halal desserts in Nyali, Mombasa.">
+  <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}/static/img/kawas-logo.png">
+  {% endblock %}
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/static/img/kawas-logo.png">
+  <link rel="apple-touch-icon" href="/static/img/kawas-logo.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS v4 via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            espresso: {
+              DEFAULT: '#3E2723',
+              50: '#FBF5F0',
+              100: '#F5E6D3',
+              200: '#E8C9A3',
+              300: '#D4A94A',
+              400: '#C08A2A',
+              500: '#A06020',
+              600: '#7A4218',
+              700: '#5A2E12',
+              800: '#3E2723',
+              900: '#2A1A18',
+              950: '#1A1008',
+            },
+            latte: '#F5E6D3',
+            gold: '#D4A94A',
+            sage: '#8A9A5B',
+            'dark-bg': '#1A1210',
+            'dark-card': '#2B1F1C',
+          },
+          fontFamily: {
+            display: ['Fraunces', 'Cormorant Garamond', 'Georgia', 'serif'],
+            body: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+            arabic: ['Noto Naskh Arabic', 'serif'],
+          },
+          borderRadius: {
+            'card': '24px',
+            'btn': '16px',
+            'input': '14px',
+            'img': '20px',
+          },
+          boxShadow: {
+            'luxury': '0 20px 60px rgba(0,0,0,0.08)',
+            'luxury-md': '0 10px 40px rgba(0,0,0,0.10)',
+            'luxury-sm': '0 4px 20px rgba(0,0,0,0.06)',
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.6s ease-out',
+            'fade-in': 'fadeIn 0.4s ease-out',
+            'steam': 'steam 2s ease-in-out infinite',
+            'pulse-slow': 'pulse 3s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: '0', transform: 'translateY(24px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            steam: {
+              '0%, 100%': { opacity: '0.3', transform: 'translateY(0) scaleX(1)' },
+              '50%': { opacity: '0.8', transform: 'translateY(-8px) scaleX(1.1)' },
+            },
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Alpine.js -->
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- HTMX -->
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    * { font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Fraunces', 'Cormorant Garamond', Georgia, serif; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #F5E6D3; }
+    ::-webkit-scrollbar-thumb { background: #3E2723; border-radius: 3px; }
+    .dark ::-webkit-scrollbar-track { background: #2B1F1C; }
+    .dark ::-webkit-scrollbar-thumb { background: #D4A94A; }
+
+    /* Smooth transitions */
+    body { transition: background-color 0.3s ease, color 0.3s ease; }
+
+    /* Glass effect */
+    .glass {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .dark .glass {
+      background: rgba(42,26,24,0.85);
+    }
+
+    /* Intersection observer fade-in */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Category pill active */
+    .cat-pill.active { background: #3E2723; color: #F5E6D3; }
+    .dark .cat-pill.active { background: #D4A94A; color: #1A1210; }
+
+    /* WhatsApp green */
+    .btn-wa { background: #25D366; }
+    .btn-wa:hover { background: #20BA5A; }
+
+    /* Steam animation */
+    .steam-line { animation: steam 2s ease-in-out infinite; }
+    .steam-line:nth-child(2) { animation-delay: 0.3s; }
+    .steam-line:nth-child(3) { animation-delay: 0.6s; }
+
+    /* Halal badge */
+    .halal-badge { background: linear-gradient(135deg, #8A9A5B, #6B7A42); }
+
+    /* Card hover */
+    .menu-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .menu-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
+  </style>
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body class="bg-latte dark:bg-dark-bg text-espresso-900 dark:text-[#F5E6D3] font-body antialiased min-h-screen">
+
+  <!-- Announcement Bar -->
+  {% for announcement in announcements %}
+  <div class="py-2 px-4 text-center text-sm font-medium text-white" style="background-color: {{ announcement.bg_color }}">
+    {{ announcement.text }}
+    {% if announcement.link %}<a href="{{ announcement.link }}" class="underline ml-1">{{ announcement.link_text|default:"Learn more" }}</a>{% endif %}
+  </div>
+  {% endfor %}
+
+  <!-- Navigation -->
+  {% include 'partials/navbar.html' %}
+
+  <!-- Main Content -->
+  <main id="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  {% include 'partials/footer.html' %}
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/{% if site_config %}{{ site_config.whatsapp }}{% else %}254119000999{% endif %}"
+     target="_blank"
+     rel="noopener noreferrer"
+     class="fixed bottom-24 right-4 z-50 btn-wa text-white w-14 h-14 rounded-full flex items-center justify-center shadow-luxury-md hover:scale-110 transition-transform duration-200 md:bottom-6"
+     aria-label="Chat on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 glass border-t border-espresso-100 dark:border-espresso-800 md:hidden py-2 px-2">
+    <div class="flex justify-around items-center max-w-sm mx-auto">
+      <a href="/" class="flex flex-col items-center gap-0.5 text-xs font-medium text-espresso-700 dark:text-[#F5E6D3] hover:text-espresso-900 dark:hover:text-gold transition-colors py-1 px-2">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span>Home</span>
+      </a>
+      <a href="/menu/" class="flex flex-col items-center gap-0.5 text-xs font-medium text-espresso-700 dark:text-[#F5E6D3] hover:text-espresso-900 dark:hover:text-gold transition-colors py-1 px-2">
+        <i data-lucide="coffee" class="w-5 h-5"></i>
+        <span>Menu</span>
+      </a>
+      <a href="https://wa.me/254119000999" target="_blank" class="flex flex-col items-center gap-0.5 text-xs font-medium py-1 px-2">
+        <div class="btn-wa text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md -mt-5 mb-0.5">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <span class="text-espresso-700 dark:text-[#F5E6D3]">Order</span>
+      </a>
+      <a href="/visit-us/" class="flex flex-col items-center gap-0.5 text-xs font-medium text-espresso-700 dark:text-[#F5E6D3] hover:text-espresso-900 dark:hover:text-gold transition-colors py-1 px-2">
+        <i data-lucide="map-pin" class="w-5 h-5"></i>
+        <span>Find Us</span>
+      </a>
+      <a href="tel:+254119000999" class="flex flex-col items-center gap-0.5 text-xs font-medium text-espresso-700 dark:text-[#F5E6D3] hover:text-espresso-900 dark:hover:text-gold transition-colors py-1 px-2">
+        <i data-lucide="phone" class="w-5 h-5"></i>
+        <span>Call</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Scroll reveal animation
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Re-init after HTMX swaps
+    document.addEventListener('htmx:afterSwap', () => {
+      lucide.createIcons();
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObserver.observe(el));
+    });
+
+    // Wishlist functionality
+    const wishlist = JSON.parse(localStorage.getItem('kawas_wishlist') || '[]');
+
+    function toggleWishlist(itemId, btn) {
+      const idx = wishlist.indexOf(itemId);
+      if (idx > -1) {
+        wishlist.splice(idx, 1);
+        btn.innerHTML = '<i data-lucide="heart" class="w-5 h-5"></i>';
+        showToast('Removed from wishlist');
+      } else {
+        wishlist.push(itemId);
+        btn.innerHTML = '<i data-lucide="heart" class="w-5 h-5 fill-red-500 text-red-500"></i>';
+        showToast('Added to wishlist! ❤️');
+      }
+      localStorage.setItem('kawas_wishlist', JSON.stringify(wishlist));
+      lucide.createIcons();
+    }
+
+    function isWishlisted(itemId) {
+      return wishlist.includes(itemId);
+    }
+
+    // Initialize wishlist button states
+    document.querySelectorAll('[data-wishlist-id]').forEach(btn => {
+      const id = btn.dataset.wishlistId;
+      if (isWishlisted(id)) {
+        btn.innerHTML = '<i data-lucide="heart" class="w-5 h-5 fill-red-500 text-red-500"></i>';
+      }
+    });
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-24 left-1/2 transform -translate-x-1/2 z-[100] bg-espresso-800 text-latte text-sm font-medium px-5 py-3 rounded-full shadow-luxury transition-all duration-300 opacity-0';
+      toast.textContent = message;
+      toast.style.background = '#3E2723';
+      toast.style.color = '#F5E6D3';
+      document.body.appendChild(toast);
+      requestAnimationFrame(() => { toast.style.opacity = '1'; });
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 2500);
+    }
+
+    function showOrderingModal() {
+      showToast('Online ordering coming soon! Order via WhatsApp 😊');
+    }
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

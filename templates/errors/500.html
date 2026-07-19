@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Server Error — KAWA'S Café{% endblock %}
+
+{% block content %}
+<div class="h-[112px] md:h-[120px]"></div>
+<section class="min-h-[70vh] flex items-center justify-center px-4 py-20">
+  <div class="text-center max-w-lg">
+    <img src="{% static 'img/kawas-logo.png' %}" alt="KAWA'S Café" class="w-20 h-20 mx-auto mb-8 opacity-60">
+    <div class="font-display text-8xl font-semibold text-espresso-200 dark:text-espresso-800 mb-4">500</div>
+    <h1 class="font-display text-3xl font-semibold text-espresso-800 dark:text-latte mb-4">Something Went Wrong</h1>
+    <p class="text-espresso-500 dark:text-latte/60 mb-8 leading-relaxed">
+      Our baristas are working on it! Please try again in a moment, or reach out to us on WhatsApp.
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="/" class="inline-flex items-center gap-2 bg-espresso-800 hover:bg-espresso-900 text-latte font-semibold px-6 py-3 rounded-btn transition-all duration-200 text-sm">
+        <i data-lucide="home" class="w-4 h-4"></i>Back to Home
+      </a>
+      <a href="https://wa.me/254119000999" target="_blank" class="inline-flex items-center gap-2 btn-wa text-white font-semibold px-6 py-3 rounded-btn transition-opacity hover:opacity-90 text-sm">
+        💬 Contact Us
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

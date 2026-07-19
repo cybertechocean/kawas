@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Terms of Service — KAWA'S Café{% endblock %}
+
+{% block content %}
+<div class="h-[112px] md:h-[120px]"></div>
+
+<section class="py-16 bg-espresso-800 dark:bg-espresso-950">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-4 block">Legal</span>
+    <h1 class="font-display text-5xl font-semibold text-latte mb-4">Terms of Service</h1>
+    <p class="text-latte/60 text-sm">Last updated: {% if terms %}{{ terms.updated_at|date:"F j, Y" }}{% else %}July 2026{% endif %}</p>
+  </div>
+</section>
+
+<section class="py-16 px-4 sm:px-6">
+  <div class="max-w-3xl mx-auto">
+    <div class="bg-white dark:bg-dark-card rounded-card p-8 md:p-10 shadow-luxury-sm">
+      {% if terms %}
+      <div class="prose prose-sm max-w-none text-espresso-700 dark:text-latte/80">{{ terms.content|safe }}</div>
+      {% else %}
+      <div class="prose prose-sm max-w-none text-espresso-700 dark:text-latte/80 space-y-6">
+        <p>Welcome to KAWA'S Café. By accessing our website at kawas.co.ke, you agree to these Terms of Service.</p>
+        <h2 class="font-display text-2xl font-semibold text-espresso-800 dark:text-latte">Use of Website</h2>
+        <p>This website is for informational purposes and menu browsing. You may not use it for any unlawful purpose.</p>
+        <h2 class="font-display text-2xl font-semibold text-espresso-800 dark:text-latte">Menu & Pricing</h2>
+        <p>Prices and menu items are subject to change without notice. Please contact us on WhatsApp to confirm current availability and pricing.</p>
+        <h2 class="font-display text-2xl font-semibold text-espresso-800 dark:text-latte">Intellectual Property</h2>
+        <p>All content on this website, including text, images, logos, and design, is the property of KAWA'S Café and may not be reproduced without permission.</p>
+        <h2 class="font-display text-2xl font-semibold text-espresso-800 dark:text-latte">Contact</h2>
+        <p>For questions, contact us at +254 119 000 999.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /kawas_admin/
+Disallow: /ckeditor5/
+
+Sitemap: https://kawas.co.ke/sitemap.xml

@@ -1,0 +1,111 @@
+{% load static %}
+<footer class="bg-espresso-800 dark:bg-espresso-950 text-latte py-16 pb-24 md:pb-16 mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Main Footer Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
+      <!-- Brand Column -->
+      <div class="lg:col-span-1">
+        <div class="flex items-center gap-3 mb-4">
+          <img src="{% static 'img/kawas-logo.png' %}" alt="KAWA'S Café" class="h-12 w-auto brightness-200">
+          <div>
+            <div class="font-display text-2xl font-semibold text-latte">KAWA'S</div>
+            <div class="text-xs text-gold tracking-widest uppercase">Café</div>
+          </div>
+        </div>
+        <p class="text-sm text-latte/70 leading-relaxed mb-4">
+          Premium Specialty Coffee, Artisan Desserts & Halal Certified Dining Experience in Nyali, Mombasa.
+        </p>
+        <!-- Halal Badge -->
+        <div class="inline-flex items-center gap-2 halal-badge text-white text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+          Halal Certified
+        </div>
+        <!-- Social Links -->
+        <div class="flex items-center gap-3 mt-4">
+          <a href="{{ site_config.facebook_url|default:'https://facebook.com/kawa_ske' }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-espresso-700 hover:bg-gold flex items-center justify-center transition-colors duration-200" aria-label="Facebook">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="{{ site_config.instagram_url|default:'https://instagram.com/kawa_ske' }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-espresso-700 hover:bg-gold flex items-center justify-center transition-colors duration-200" aria-label="Instagram">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://tiktok.com/@kawa_ske" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-espresso-700 hover:bg-gold flex items-center justify-center transition-colors duration-200" aria-label="TikTok">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.35a8.16 8.16 0 004.77 1.52V7.42a4.85 4.85 0 01-1-.73z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="font-display text-lg font-semibold text-latte mb-5">Quick Links</h3>
+        <ul class="space-y-2.5">
+          <li><a href="/" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Home</a></li>
+          <li><a href="/menu/" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Our Menu</a></li>
+          <li><a href="/breakfast/" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Breakfast</a></li>
+          <li><a href="/gallery/" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Gallery</a></li>
+          <li><a href="/about/" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Our Story</a></li>
+          <li><a href="/visit-us/" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Visit Us</a></li>
+          <li><a href="/contact/" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Contact Us</a></li>
+          <li><a href="/faqs/" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>FAQs</a></li>
+        </ul>
+      </div>
+
+      <!-- Menu Categories -->
+      <div>
+        <h3 class="font-display text-lg font-semibold text-latte mb-5">Our Menu</h3>
+        <ul class="space-y-2.5">
+          <li><a href="/menu/?cat=hot-coffee" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Hot Coffee</a></li>
+          <li><a href="/menu/?cat=iced-coffee" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Iced Coffee</a></li>
+          <li><a href="/menu/?cat=matcha" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Matcha</a></li>
+          <li><a href="/menu/?cat=frappes" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Frappes</a></li>
+          <li><a href="/menu/?cat=fresh-juices" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Fresh Juices</a></li>
+          <li><a href="/menu/?cat=milkshakes" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Milkshakes</a></li>
+          <li><a href="/menu/?cat=desserts" class="text-latte/70 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i>Desserts</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact & Hours -->
+      <div>
+        <h3 class="font-display text-lg font-semibold text-latte mb-5">Contact & Hours</h3>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3 text-sm text-latte/70">
+            <i data-lucide="map-pin" class="w-4 h-4 text-gold mt-0.5 shrink-0"></i>
+            <span>Mount Kenya Road, Nyali, Mombasa, Kenya</span>
+          </li>
+          <li class="flex items-center gap-3 text-sm text-latte/70">
+            <i data-lucide="phone" class="w-4 h-4 text-gold shrink-0"></i>
+            <a href="tel:+254119000999" class="hover:text-gold transition-colors">+254 119 000 999</a>
+          </li>
+          <li class="flex items-center gap-3 text-sm text-latte/70">
+            <i data-lucide="message-circle" class="w-4 h-4 text-gold shrink-0"></i>
+            <a href="https://wa.me/254119000999" target="_blank" class="hover:text-gold transition-colors">WhatsApp Us</a>
+          </li>
+          <li class="flex items-start gap-3 text-sm text-latte/70">
+            <i data-lucide="clock" class="w-4 h-4 text-gold mt-0.5 shrink-0"></i>
+            <div>
+              <div>Mon – Fri: 6 AM – 11 PM</div>
+              <div>Sat – Sun: 6 AM – 12 Midnight</div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- QR Code -->
+        <div class="mt-5">
+          <p class="text-xs text-latte/50 mb-2">Scan for our menu</p>
+          <img src="{% static 'img/kawas-menu-qr.png' %}" alt="KAWA'S Menu QR Code" class="w-20 h-20 rounded-xl bg-white p-1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-espresso-700 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-latte/50">
+      <p>© {% now "Y" %} KAWA'S Café. All rights reserved. Proudly serving Nyali, Mombasa.</p>
+      <div class="flex items-center gap-4">
+        <a href="/privacy-policy/" class="hover:text-gold transition-colors">Privacy Policy</a>
+        <a href="/terms/" class="hover:text-gold transition-colors">Terms of Service</a>
+        <a href="/sitemap.xml" class="hover:text-gold transition-colors">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>

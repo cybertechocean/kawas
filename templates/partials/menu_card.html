@@ -1,0 +1,109 @@
+{% load static urllib_tags %}
+{% comment %}
+Reusable menu item card. Pass `item` context variable.
+{% endcomment %}
+<article class="menu-card bg-white dark:bg-dark-card rounded-card shadow-luxury-sm hover:shadow-luxury overflow-hidden group relative">
+
+  <!-- Badges -->
+  <div class="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
+    {% if item.is_best_seller %}
+    <span class="bg-gold text-espresso-900 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">Best Seller</span>
+    {% endif %}
+    {% if item.is_new_arrival %}
+    <span class="bg-espresso-800 text-latte text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">New</span>
+    {% endif %}
+    {% if item.is_chefs_pick %}
+    <span class="bg-sage text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">Chef's Pick</span>
+    {% endif %}
+  </div>
+
+  <!-- Wishlist Button -->
+  <button onclick="toggleWishlist('{{ item.id }}', this)"
+          data-wishlist-id="{{ item.id }}"
+          class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full glass flex items-center justify-center text-espresso-700 hover:text-red-500 transition-all duration-200"
+          aria-label="Add to wishlist">
+    <i data-lucide="heart" class="w-5 h-5"></i>
+  </button>
+
+  <!-- Image -->
+  <a href="{{ item.get_absolute_url }}" class="block overflow-hidden aspect-square">
+    {% if item.image %}
+    <img src="{{ item.image.url }}"
+         alt="{{ item.name }}"
+         loading="lazy"
+         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+    {% else %}
+    <div class="w-full h-full bg-gradient-to-br from-espresso-100 to-latte flex items-center justify-center dark:from-espresso-800 dark:to-espresso-700">
+      <i data-lucide="coffee" class="w-16 h-16 text-espresso-300 dark:text-espresso-600"></i>
+    </div>
+    {% endif %}
+  </a>
+
+  <!-- Content -->
+  <div class="p-4">
+    <!-- Category -->
+    <span class="text-xs font-medium text-gold uppercase tracking-wider">{{ item.category.name }}</span>
+
+    <!-- Title -->
+    <h3 class="font-display text-lg font-semibold text-espresso-800 dark:text-latte mt-1 mb-1 leading-tight">
+      <a href="{{ item.get_absolute_url }}" class="hover:text-gold transition-colors">{{ item.name }}</a>
+    </h3>
+
+    <!-- Description -->
+    {% if item.short_description %}
+    <p class="text-xs text-espresso-500 dark:text-latte/60 leading-relaxed mb-3 line-clamp-2">{{ item.short_description }}</p>
+    {% endif %}
+
+    <!-- Variants / Price -->
+    {% if item.variants.all %}
+    <div class="flex flex-wrap gap-1.5 mb-3">
+      {% for variant in item.variants.all %}
+      <span class="text-xs bg-latte dark:bg-espresso-800 text-espresso-700 dark:text-latte px-2 py-0.5 rounded-full">
+        {{ variant.get_size_display }}: KSh {{ variant.price|floatformat:0 }}
+      </span>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-base font-bold text-espresso-800 dark:text-gold mb-3">{{ item.get_price_display }}</div>
+    {% endif %}
+
+    <!-- Availability -->
+    {% if not item.is_available %}
+    <span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full mb-2 inline-block">Unavailable</span>
+    {% endif %}
+
+    <!-- Action Buttons -->
+    <div class="grid grid-cols-2 gap-2 mt-3">
+      <!-- Order Button -->
+      <button onclick="showOrderingModal()"
+              class="flex items-center justify-center gap-1.5 bg-espresso-800 hover:bg-espresso-900 text-latte text-xs font-semibold py-2.5 px-3 rounded-btn transition-all duration-200 hover:-translate-y-0.5 hover:shadow-luxury-sm">
+        <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+        Order
+      </button>
+
+      <!-- WhatsApp Order -->
+      <a href="{{ item|wa_url }}"
+         target="_blank"
+         rel="noopener"
+         class="flex items-center justify-center gap-1.5 btn-wa text-white text-xs font-semibold py-2.5 px-3 rounded-btn transition-all duration-200 hover:-translate-y-0.5 hover:shadow-luxury-sm">
+        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+        WhatsApp
+      </a>
+
+      <!-- View Details -->
+      <a href="{{ item.get_absolute_url }}"
+         class="flex items-center justify-center gap-1.5 border-2 border-espresso-200 dark:border-espresso-700 text-espresso-700 dark:text-latte hover:border-gold hover:text-gold text-xs font-semibold py-2.5 px-3 rounded-btn transition-all duration-200">
+        <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+        Details
+      </a>
+
+      <!-- Wishlist -->
+      <button onclick="toggleWishlist('{{ item.id }}', this)"
+              data-wishlist-id="{{ item.id }}"
+              class="flex items-center justify-center gap-1.5 border-2 border-espresso-200 dark:border-espresso-700 text-espresso-700 dark:text-latte hover:border-red-400 hover:text-red-500 text-xs font-semibold py-2.5 px-3 rounded-btn transition-all duration-200">
+        <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+        Save
+      </button>
+    </div>
+  </div>
+</article>

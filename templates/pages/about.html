@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Story — KAWA'S Café{% endblock %}
+{% block meta_description %}Discover the story behind KAWA'S Café — a premium halal specialty coffee house inspired by Dubai & Istanbul, rooted in the coastal charm of Nyali, Mombasa.{% endblock %}
+
+{% block content %}
+<div class="h-[112px] md:h-[120px]"></div>
+
+<!-- Hero -->
+<section class="py-24 bg-espresso-800 dark:bg-espresso-950 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="geo" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse"><circle cx="40" cy="40" r="2" fill="#D4A94A"/><path d="M0 40 L40 0 L80 40 L40 80 Z" fill="none" stroke="#D4A94A" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#geo)"/></svg>
+  </div>
+  <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+    <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-4 block">Our Story</span>
+    <h1 class="font-display text-5xl md:text-7xl font-semibold text-latte mb-6 leading-tight">
+      Crafted With Love.<br>
+      <span class="text-gold italic">Rooted in Mombasa.</span>
+    </h1>
+    <p class="text-latte/70 text-lg max-w-2xl mx-auto">A premium halal café experience inspired by the world's finest cafés, brought home to the coast of Kenya.</p>
+  </div>
+</section>
+
+<!-- Story Section -->
+<section class="py-20 px-4 sm:px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="reveal">
+        <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-3 block">The Beginning</span>
+        <h2 class="font-display text-4xl font-semibold text-espresso-800 dark:text-latte mb-6">Where Passion Meets Coffee</h2>
+        <div class="space-y-4 text-espresso-600 dark:text-latte/70 leading-relaxed">
+          <p>KAWA'S Café was born from a deep passion for exceptional coffee and a desire to bring a world-class café experience to Nyali, Mombasa. Inspired by the elegant specialty coffee houses of Dubai, Doha, and Istanbul, we set out to create something truly special for the Kenyan coast.</p>
+          <p>Our name "KAWA'S" comes from the Swahili word for coffee — <em>"Kahawa"</em> — a nod to our roots and our love for this beautiful beverage that connects people across cultures and generations.</p>
+          <p>Every element of KAWA'S has been thoughtfully crafted: from our premium espresso machine and carefully sourced coffee beans, to our artisan desserts and the warm, welcoming atmosphere of our café space.</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="bg-white dark:bg-dark-card rounded-card p-8 shadow-luxury">
+          <div class="text-6xl mb-4">☕</div>
+          <blockquote class="font-display text-2xl italic text-espresso-800 dark:text-latte leading-relaxed mb-6">
+            "At KAWA'S, every cup is crafted with passion and every guest is welcomed like family."
+          </blockquote>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-espresso-100 dark:bg-espresso-800 flex items-center justify-center">
+              <i data-lucide="user" class="w-5 h-5 text-espresso-700"></i>
+            </div>
+            <div>
+              <div class="font-semibold text-espresso-800 dark:text-latte text-sm">The KAWA'S Team</div>
+              <div class="text-xs text-espresso-400 dark:text-latte/50">Nyali, Mombasa</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Philosophy -->
+<section class="py-20 bg-white dark:bg-dark-card px-4 sm:px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-3 block">Our Values</span>
+      <h2 class="font-display text-4xl font-semibold text-espresso-800 dark:text-latte">What We Believe In</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for value in values %}{% endfor %}
+      <div class="p-6 rounded-card border border-espresso-100 dark:border-espresso-800 reveal">
+        <div class="text-3xl mb-3">☕</div>
+        <h3 class="font-display text-xl font-semibold text-espresso-800 dark:text-latte mb-2">Premium Specialty Coffee</h3>
+        <p class="text-sm text-espresso-500 dark:text-latte/60 leading-relaxed">We source only the finest specialty coffee beans and train our baristas to extract every nuance of flavour.</p>
+      </div>
+      <div class="p-6 rounded-card border border-espresso-100 dark:border-espresso-800 reveal">
+        <div class="text-3xl mb-3">🌙</div>
+        <h3 class="font-display text-xl font-semibold text-espresso-800 dark:text-latte mb-2">Halal Certified</h3>
+        <p class="text-sm text-espresso-500 dark:text-latte/60 leading-relaxed">We are proudly Halal certified. Every ingredient, every recipe, and every drink is 100% alcohol-free and halal-compliant.</p>
+      </div>
+      <div class="p-6 rounded-card border border-espresso-100 dark:border-espresso-800 reveal">
+        <div class="text-3xl mb-3">🍰</div>
+        <h3 class="font-display text-xl font-semibold text-espresso-800 dark:text-latte mb-2">Artisan Desserts</h3>
+        <p class="text-sm text-espresso-500 dark:text-latte/60 leading-relaxed">From Middle Eastern kunafa to classic tiramisu, our desserts are freshly prepared using premium quality ingredients.</p>
+      </div>
+      <div class="p-6 rounded-card border border-espresso-100 dark:border-espresso-800 reveal">
+        <div class="text-3xl mb-3">🌴</div>
+        <h3 class="font-display text-xl font-semibold text-espresso-800 dark:text-latte mb-2">Coastal Elegance</h3>
+        <p class="text-sm text-espresso-500 dark:text-latte/60 leading-relaxed">We celebrate the relaxed coastal lifestyle of Nyali, Mombasa while maintaining the elevated standards of a premium café.</p>
+      </div>
+      <div class="p-6 rounded-card border border-espresso-100 dark:border-espresso-800 reveal">
+        <div class="text-3xl mb-3">🤎</div>
+        <h3 class="font-display text-xl font-semibold text-espresso-800 dark:text-latte mb-2">Warm Hospitality</h3>
+        <p class="text-sm text-espresso-500 dark:text-latte/60 leading-relaxed">Every guest is welcomed like family. Our team is trained to provide warm, attentive, and genuinely caring service.</p>
+      </div>
+      <div class="p-6 rounded-card border border-espresso-100 dark:border-espresso-800 reveal">
+        <div class="text-3xl mb-3">👨‍👩‍👧‍👦</div>
+        <h3 class="font-display text-xl font-semibold text-espresso-800 dark:text-latte mb-2">Family Friendly</h3>
+        <p class="text-sm text-espresso-500 dark:text-latte/60 leading-relaxed">KAWA'S is a welcoming space for families, professionals, students, tourists, and coffee lovers of all ages.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Inspiration -->
+<section class="py-20 bg-espresso-800 dark:bg-espresso-950 px-4 sm:px-6 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-5"><svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="geo3" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="1.5" fill="#D4A94A"/></pattern></defs><rect width="100%" height="100%" fill="url(#geo3)"/></svg></div>
+  <div class="max-w-4xl mx-auto text-center relative z-10">
+    <div class="inline-flex items-center gap-2 text-3xl mb-6">🇦🇪 + 🇶🇦 + 🇹🇷 + 🇰🇪</div>
+    <h2 class="font-display text-4xl font-semibold text-latte mb-6 reveal">Inspired by the World's Finest Cafés</h2>
+    <p class="text-latte/70 text-base leading-relaxed max-w-2xl mx-auto reveal">
+      Drawing inspiration from % Arabica, Bateel Café, EL&N London, and premium Turkish coffee houses, KAWA'S brings that same level of excellence and attention to detail to the beautiful coastal city of Mombasa. We've taken the best of café culture from Dubai, Doha, and Istanbul and infused it with the warmth and character of Nyali.
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 reveal">
+      <a href="/menu/" class="inline-flex items-center gap-2 bg-gold hover:bg-[#C08A2A] text-espresso-900 font-bold px-7 py-3.5 rounded-btn transition-all duration-200">
+        ☕ Explore Our Menu
+      </a>
+      <a href="/visit-us/" class="inline-flex items-center gap-2 border-2 border-latte/30 text-latte hover:border-gold hover:text-gold font-semibold px-7 py-3.5 rounded-btn transition-all duration-200">
+        <i data-lucide="map-pin" class="w-4 h-4"></i>Visit Us
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

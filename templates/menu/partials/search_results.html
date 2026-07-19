@@ -1,0 +1,15 @@
+{% load static %}
+{% if items %}
+<p class="text-sm text-espresso-500 dark:text-latte/60 mb-4">Found {{ items|length }} result{{ items|length|pluralize }} for "<strong>{{ query }}</strong>"</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  {% for item in items %}
+  {% include 'partials/menu_card.html' with item=item %}
+  {% endfor %}
+</div>
+{% elif query|length >= 2 %}
+<div class="text-center py-16">
+  <i data-lucide="search-x" class="w-14 h-14 text-espresso-200 dark:text-espresso-700 mx-auto mb-4"></i>
+  <h3 class="font-display text-xl text-espresso-700 dark:text-latte mb-2">No results for "{{ query }}"</h3>
+  <p class="text-espresso-400 dark:text-latte/50 text-sm">Try a different search term</p>
+</div>
+{% endif %}

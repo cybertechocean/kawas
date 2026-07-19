@@ -2,6 +2,42 @@ modules = ["python-3.12"]
 
 [nix]
 channel = "stable-25_05"
+packages = ["freetype", "gumbo", "harfbuzz", "jbig2dec", "lcms2", "libimagequant", "libjpeg", "libjpeg_turbo", "libtiff", "libwebp", "libxcrypt", "mupdf", "openjpeg", "swig", "tcl", "tk", "xcbuild", "zlib"]
 
 [agent]
 expertMode = true
+
+[userenv]
+
+[userenv.shared]
+ALLOWED_HOSTS = "localhost,127.0.0.1,0.0.0.0,.replit.dev,.replit.app,.repl.co"
+DEBUG = "True"
+DJANGO_SETTINGS_MODULE = "kawas.settings"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "gunicorn kawas.wsgi:application --config gunicorn.conf.py"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80

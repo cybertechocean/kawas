@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Privacy Policy — KAWA'S Café{% endblock %}
+
+{% block content %}
+<div class="h-[112px] md:h-[120px]"></div>
+
+<section class="py-16 bg-espresso-800 dark:bg-espresso-950">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-4 block">Legal</span>
+    <h1 class="font-display text-5xl font-semibold text-latte mb-4">Privacy Policy</h1>
+    <p class="text-latte/60 text-sm">Last updated: {% if policy %}{{ policy.updated_at|date:"F j, Y" }}{% else %}July 2026{% endif %}</p>
+  </div>
+</section>
+
+<section class="py-16 px-4 sm:px-6">
+  <div class="max-w-3xl mx-auto">
+    <div class="bg-white dark:bg-dark-card rounded-card p-8 md:p-10 shadow-luxury-sm">
+      {% if policy %}
+      <div class="prose prose-sm max-w-none text-espresso-700 dark:text-latte/80">
+        {{ policy.content|safe }}
+      </div>
+      {% else %}
+      <div class="prose prose-sm max-w-none text-espresso-700 dark:text-latte/80 space-y-6">
+        <p>At KAWA'S Café ("we", "our", "us"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website kawas.co.ke.</p>
+
+        <h2 class="font-display text-2xl font-semibold text-espresso-800 dark:text-latte">Information We Collect</h2>
+        <p>We may collect information you provide directly to us, such as when you contact us via WhatsApp or through our contact page. This may include your name and phone number.</p>
+
+        <h2 class="font-display text-2xl font-semibold text-espresso-800 dark:text-latte">How We Use Your Information</h2>
+        <ul>
+          <li>To respond to your inquiries and orders</li>
+          <li>To improve our website and services</li>
+          <li>To send occasional updates (with your consent)</li>
+        </ul>
+
+        <h2 class="font-display text-2xl font-semibold text-espresso-800 dark:text-latte">Third-Party Links</h2>
+        <p>Our website may contain links to third-party websites such as Google Maps, WhatsApp, Instagram, Facebook, and TikTok. We are not responsible for the privacy practices of these sites.</p>
+
+        <h2 class="font-display text-2xl font-semibold text-espresso-800 dark:text-latte">Cookies</h2>
+        <p>Our website uses local storage to save your dark mode preference and wishlist items. We do not use tracking cookies or advertising cookies.</p>
+
+        <h2 class="font-display text-2xl font-semibold text-espresso-800 dark:text-latte">Contact Us</h2>
+        <p>If you have any questions about this Privacy Policy, please contact us at +254 119 000 999 or via WhatsApp at the same number.</p>
+
+        <p class="text-espresso-400 text-xs">Last updated: July 2026. KAWA'S Café, Mount Kenya Road, Nyali, Mombasa, Kenya.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

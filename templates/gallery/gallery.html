@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gallery — KAWA'S Café{% endblock %}
+{% block meta_description %}Explore KAWA'S Café gallery — beautiful moments of specialty coffee, artisan desserts, and our coastal café in Nyali, Mombasa. Follow us @kawa_ske{% endblock %}
+
+{% block content %}
+<div class="h-[112px] md:h-[120px]"></div>
+
+<!-- Hero -->
+<section class="py-16 bg-espresso-800 dark:bg-espresso-950 relative overflow-hidden">
+  <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+    <span class="text-gold text-sm font-semibold uppercase tracking-widest mb-4 block">@kawa_ske</span>
+    <h1 class="font-display text-5xl md:text-6xl font-semibold text-latte mb-4">Our Gallery</h1>
+    <p class="text-latte/70 text-lg max-w-xl mx-auto">Beautiful moments from KAWA'S Café — follow us on Instagram, Facebook & TikTok.</p>
+    <div class="flex items-center justify-center gap-4 mt-6">
+      <a href="https://instagram.com/kawa_ske" target="_blank" class="text-latte/60 hover:text-gold transition-colors flex items-center gap-1.5 text-sm">
+        <i data-lucide="instagram" class="w-4 h-4"></i>Instagram
+      </a>
+      <a href="https://facebook.com/kawa_ske" target="_blank" class="text-latte/60 hover:text-gold transition-colors flex items-center gap-1.5 text-sm">
+        <i data-lucide="facebook" class="w-4 h-4"></i>Facebook
+      </a>
+      <a href="https://tiktok.com/@kawa_ske" target="_blank" class="text-latte/60 hover:text-gold transition-colors flex items-center gap-1.5 text-sm">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.35a8.16 8.16 0 004.77 1.52V7.42a4.85 4.85 0 01-1-.73z"/></svg>TikTok
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery Grid -->
+<section class="py-16 px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto">
+    {% if images %}
+    <div class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4" x-data="{ lightbox: false, current: '' }">
+      {% for img in images %}
+      <div class="break-inside-avoid">
+        <a @click.prevent="lightbox = true; current = '{{ img.image.url }}'"
+           href="{{ img.image.url }}"
+           class="block group relative overflow-hidden rounded-card shadow-luxury-sm hover:shadow-luxury transition-all duration-300 reveal">
+          <img src="{{ img.image.url }}"
+               alt="{{ img.title|default:'KAWA Café' }}"
+               loading="lazy"
+               class="w-full h-auto transition-transform duration-500 group-hover:scale-105">
+          {% if img.title or img.caption %}
+          <div class="absolute inset-0 bg-gradient-to-t from-espresso-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+            {% if img.title %}<p class="text-latte text-sm font-semibold">{{ img.title }}</p>{% endif %}
+          </div>
+          {% endif %}
+        </a>
+      </div>
+      {% endfor %}
+
+      <!-- Lightbox -->
+      <div x-show="lightbox"
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0"
+           x-transition:enter-end="opacity-100"
+           @click.self="lightbox = false"
+           @keydown.escape.window="lightbox = false"
+           class="fixed inset-0 z-[200] bg-espresso-900/95 flex items-center justify-center p-4">
+        <button @click="lightbox = false" class="absolute top-4 right-4 text-latte hover:text-gold">
+          <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <img :src="current" alt="Gallery" class="max-w-full max-h-[90vh] object-contain rounded-card shadow-luxury">
+      </div>
+    </div>
+    {% else %}
+    <div class="text-center py-20">
+      <i data-lucide="image" class="w-16 h-16 text-espresso-200 dark:text-espresso-700 mx-auto mb-4"></i>
+      <h3 class="font-display text-2xl text-espresso-700 dark:text-latte mb-2">Gallery coming soon</h3>
+      <p class="text-espresso-400 dark:text-latte/50">Follow us on Instagram @kawa_ske for beautiful photos</p>
+      <a href="https://instagram.com/kawa_ske" target="_blank" class="inline-flex items-center gap-2 mt-6 bg-espresso-800 text-latte px-6 py-3 rounded-btn text-sm font-semibold hover:bg-espresso-900 transition-colors">
+        <i data-lucide="instagram" class="w-4 h-4"></i>Follow @kawa_ske
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Social CTA -->
+<section class="py-16 bg-espresso-800 dark:bg-espresso-950 px-4">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="font-display text-3xl font-semibold text-latte mb-4">Share Your KAWA'S Moments</h2>
+    <p class="text-latte/70 mb-8">Tag us in your photos and we'll feature the best ones. Use <strong class="text-gold">#KawasCafe</strong></p>
+    <div class="flex flex-wrap items-center justify-center gap-4">
+      <a href="https://instagram.com/kawa_ske" target="_blank" class="inline-flex items-center gap-2 bg-latte text-espresso-900 font-bold px-6 py-3 rounded-btn hover:bg-gold transition-colors text-sm">
+        <i data-lucide="instagram" class="w-4 h-4"></i>Follow @kawa_ske
+      </a>
+      <a href="https://wa.me/254119000999" target="_blank" class="inline-flex items-center gap-2 btn-wa text-white font-bold px-6 py-3 rounded-btn transition-opacity hover:opacity-90 text-sm">
+        Order via WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}
