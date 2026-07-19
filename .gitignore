@@ -32,3 +32,4 @@ staticfiles/
 
 # cPanel — keep public/ out of git (web server handles it)
 public/
+tmp/
