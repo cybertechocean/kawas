@@ -1,0 +1,36 @@
+# Python compilation artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments (VS Code & Local venv)
+.venv/
+venv/
+ENV/
+.env
+
+# VS Code specific files
+.vscode/
+.history/
+*.code-workspace
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Django specific files
+*.log
+local_settings.py
+
+# Databases (Ignore local SQLite if used for testing)
+*.sqlite3
+*.sqlite3-journal
+
+# Media & Static (cPanel will handle collected static files)
+media/
+staticfiles/
+
+# HostNali / cPanel specific entries
+passenger_wsgi.py
+public/
+.htaccess
