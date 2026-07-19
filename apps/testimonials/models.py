@@ -1,7 +1,6 @@
 import uuid
 from django.db import models
-from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
+from cloudinary.models import CloudinaryField
 
 
 class Testimonial(models.Model):
@@ -12,13 +11,7 @@ class Testimonial(models.Model):
     title = models.CharField(max_length=100, blank=True, help_text="e.g. Coffee Enthusiast, Regular Customer")
     review = models.TextField()
     rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES, default=5)
-    avatar = models.ImageField(upload_to='testimonials/', blank=True, null=True)
-    avatar_thumb = ImageSpecField(
-        source='avatar',
-        processors=[ResizeToFill(100, 100)],
-        format='WEBP',
-        options={'quality': 85}
-    )
+    avatar = CloudinaryField('image', folder='kawas/testimonials', blank=True, null=True)
     source = models.CharField(max_length=50, blank=True, default="Google Reviews")
     is_featured = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
@@ -32,3 +25,10 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return f"{self.name} — {'⭐' * self.rating}"
+
+    @property
+    def avatar_url(self):
+        """Full Cloudinary URL for the avatar."""
+        if self.avatar:
+            return self.avatar.url
+        return ''

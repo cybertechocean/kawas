@@ -1,0 +1,197 @@
+I can now see the full picture. The good news is that **your project is in excellent shape**. The only incompatible component is **`django-cloudinary-storage`**.
+
+## The issue
+
+You have:
+
+* ✅ Django 6.0.7
+* ✅ WhiteNoise 6.12.0
+* ✅ Cloudinary SDK 1.45.0
+* ✅ ImageKit 6.1.0
+* ❌ `django-cloudinary-storage 0.3.0` (abandoned)
+
+The problem is that **Cloudinary has not released a Django 5/6-compatible replacement** for `django-cloudinary-storage`. The package still assumes the old `STATICFILES_STORAGE` setting and therefore breaks `collectstatic`.
+
+---
+
+# I do NOT recommend downgrading Django
+
+Django 6 is the right choice.
+
+---
+
+# I also do NOT recommend removing Cloudinary
+
+Cloudinary is still an excellent choice for a media-heavy café website.
+
+---
+
+# The solution I recommend
+
+Instead of trying to make an abandoned package work with Django 6, use the **official Cloudinary Django field**.
+
+Instead of this:
+
+```python
+image = models.ImageField(upload_to="menu/")
+```
+
+you would use:
+
+```python
+from cloudinary.models import CloudinaryField
+
+image = CloudinaryField("image", folder="menu")
+```
+
+Benefits:
+
+* Images upload directly to Cloudinary.
+* No custom storage backend required.
+* No `django-cloudinary-storage`.
+* Fully supported by Cloudinary.
+* No `collectstatic` issues.
+* WhiteNoise continues serving CSS/JS locally.
+
+---
+
+# Because you have zero uploaded images...
+
+This is the perfect time to migrate.
+
+You won't lose anything.
+
+---
+
+# Migration steps
+
+## 1. Remove the old package
+
+```bash
+pip uninstall django-cloudinary-storage
+```
+
+---
+
+## 2. Remove from `INSTALLED_APPS`
+
+Delete:
+
+```python
+"cloudinary_storage",
+```
+
+Keep:
+
+```python
+"cloudinary",
+```
+
+Your `INSTALLED_APPS` already contains both. Remove only `cloudinary_storage`. 
+
+---
+
+## 3. Remove these settings
+
+Delete:
+
+```python
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    ...
+}
+
+CLOUDINARY_STORAGE = {
+    ...
+}
+```
+
+These belong to the old package. 
+
+Keep your `cloudinary.config(...)` block—it configures the official SDK. 
+
+---
+
+## 4. Update your models
+
+Replace:
+
+```python
+models.ImageField(
+    upload_to="menu/",
+    blank=True,
+    null=True
+)
+```
+
+with:
+
+```python
+from cloudinary.models import CloudinaryField
+
+image = CloudinaryField(
+    "image",
+    folder="menu",
+    blank=True,
+    null=True
+)
+```
+
+Similarly:
+
+```python
+image = CloudinaryField(
+    "image",
+    folder="categories",
+    blank=True,
+    null=True
+)
+```
+
+and so on for:
+
+* `hero`
+* `gallery`
+* `categories`
+* `menu`
+* `testimonials`
+
+---
+
+## 5. Make migrations
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+---
+
+## 6. Collect static
+
+```bash
+python manage.py collectstatic --noinput
+```
+
+This time Django will use WhiteNoise's `CompressedManifestStaticFilesStorage`, and the old Cloudinary `collectstatic` override will no longer be involved.
+
+---
+
+# One thing to consider: ImageKit
+
+Your models currently generate thumbnails from `ImageField` sources using `ImageSpecField`. Those specs assume a local file-like object. When switching to `CloudinaryField`, ImageKit may not work as expected because the source is now a Cloudinary asset rather than a standard local file.
+
+For Cloudinary-hosted images, you typically **don't need ImageKit**. Cloudinary can generate resized, cropped, and optimized images on the fly through URL transformations, which is one of its biggest advantages.
+
+---
+
+## My recommendation
+
+I recommend doing this in two phases:
+
+1. **Fix the deployment first** by replacing `django-cloudinary-storage` with `CloudinaryField`.
+2. **Then** replace the ImageKit thumbnail generation with Cloudinary transformations, which will simplify your code and reduce server-side image processing.
+
+This will leave you with a modern, fully Django 6-compatible stack that is easier to maintain and better suited for a media-rich site like KAWA'S Café.

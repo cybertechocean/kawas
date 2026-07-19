@@ -2,8 +2,7 @@ import uuid
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
-from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill, ResizeToFit
+from cloudinary.models import CloudinaryField
 from django_ckeditor_5.fields import CKEditor5Field
 
 
@@ -13,13 +12,7 @@ class Category(models.Model):
     slug = models.SlugField(unique=True, max_length=120)
     description = CKEditor5Field(config_name='default', blank=True)
     short_description = models.CharField(max_length=255, blank=True)
-    image = models.ImageField(upload_to='categories/', blank=True, null=True)
-    image_thumbnail = ImageSpecField(
-        source='image',
-        processors=[ResizeToFill(800, 600)],
-        format='WEBP',
-        options={'quality': 85}
-    )
+    image = CloudinaryField('image', folder='kawas/categories', blank=True, null=True)
     emoji = models.CharField(max_length=10, blank=True, help_text="Category emoji icon")
     icon = models.CharField(max_length=50, blank=True, help_text="Lucide icon name")
     is_active = models.BooleanField(default=True)
@@ -43,6 +36,13 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('menu:category', kwargs={'slug': self.slug})
 
+    @property
+    def image_url(self):
+        """Full Cloudinary URL for the category image."""
+        if self.image:
+            return self.image.url
+        return ''
+
 
 class MenuItem(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -59,20 +59,8 @@ class MenuItem(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2, help_text="Base price in KSh")
     price_display = models.CharField(max_length=50, blank=True, help_text="Override price display e.g. 'From KSh 400'")
 
-    # Images
-    image = models.ImageField(upload_to='menu/', blank=True, null=True)
-    image_thumb = ImageSpecField(
-        source='image',
-        processors=[ResizeToFill(600, 600)],
-        format='WEBP',
-        options={'quality': 85}
-    )
-    image_large = ImageSpecField(
-        source='image',
-        processors=[ResizeToFit(1200, 800)],
-        format='WEBP',
-        options={'quality': 90}
-    )
+    # Image — stored on Cloudinary via CloudinaryField
+    image = CloudinaryField('image', folder='kawas/menu', blank=True, null=True)
 
     # Badges
     is_featured = models.BooleanField(default=False)
@@ -113,6 +101,13 @@ class MenuItem(models.Model):
 
     def get_whatsapp_message(self):
         return f"👋 Hello KAWA'S Café!\n\nI am interested in your *{self.name}*.\n\nMenu Link: https://kawas.co.ke/menu/{self.slug}/\n\nThank you! 🙏"
+
+    @property
+    def image_url(self):
+        """Full Cloudinary URL for the menu item image."""
+        if self.image:
+            return self.image.url
+        return ''
 
 
 class MenuVariant(models.Model):

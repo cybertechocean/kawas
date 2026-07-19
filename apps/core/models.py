@@ -1,7 +1,6 @@
 import uuid
 from django.db import models
-from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill, ResizeToFit
+from cloudinary.models import CloudinaryField
 from django_ckeditor_5.fields import CKEditor5Field
 
 
@@ -10,13 +9,7 @@ class HeroSlide(models.Model):
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='hero/')
-    image_thumbnail = ImageSpecField(
-        source='image',
-        processors=[ResizeToFill(1920, 1080)],
-        format='WEBP',
-        options={'quality': 85}
-    )
+    image = CloudinaryField('image', folder='kawas/hero', blank=True, null=True)
     cta_primary_text = models.CharField(max_length=50, default="Explore Our Menu")
     cta_primary_url = models.CharField(max_length=200, default="/menu/")
     cta_secondary_text = models.CharField(max_length=50, default="Order on WhatsApp")
@@ -32,3 +25,10 @@ class HeroSlide(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def image_url(self):
+        """Full Cloudinary URL for the hero image."""
+        if self.image:
+            return self.image.url
+        return ''

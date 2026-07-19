@@ -1,26 +1,13 @@
 import uuid
 from django.db import models
-from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill, ResizeToFit
+from cloudinary.models import CloudinaryField
 
 
 class GalleryImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200, blank=True)
     caption = models.TextField(blank=True)
-    image = models.ImageField(upload_to='gallery/')
-    image_thumb = ImageSpecField(
-        source='image',
-        processors=[ResizeToFill(600, 600)],
-        format='WEBP',
-        options={'quality': 85}
-    )
-    image_large = ImageSpecField(
-        source='image',
-        processors=[ResizeToFit(1400, 1000)],
-        format='WEBP',
-        options={'quality': 90}
-    )
+    image = CloudinaryField('image', folder='kawas/gallery', blank=True, null=True)
     is_featured = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     ordering = models.PositiveIntegerField(default=0)
@@ -33,3 +20,10 @@ class GalleryImage(models.Model):
 
     def __str__(self):
         return self.title or f"Gallery Image {self.pk}"
+
+    @property
+    def image_url(self):
+        """Full Cloudinary URL for the gallery image."""
+        if self.image:
+            return self.image.url
+        return ''
