@@ -1,4 +1,4 @@
-modules = ["python-3.12"]
+modules = ["web", "python-3.12"]
 
 [nix]
 channel = "stable-25_05"
@@ -30,13 +30,13 @@ args = "Start application"
 name = "Start application"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "gunicorn kawas.wsgi:application --config gunicorn.conf.py"
-waitForPort = 5000
-
 [workflows.workflow.metadata]
 outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python -m gunicorn kawas.wsgi:application --config gunicorn.conf.py"
+waitForPort = 5000
 
 [[ports]]
 localPort = 5000
