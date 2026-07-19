@@ -13,11 +13,16 @@ def menu_home(request):
     if active_slug:
         active_category = get_object_or_404(Category, slug=active_slug, is_active=True)
         items = MenuItem.objects.filter(
-            category=active_category, is_active=True
+            category=active_category,
+            is_active=True,
         ).select_related('category').prefetch_related('variants')
     else:
         active_category = None
-        items = MenuItem.objects.filter(is_active=True).select_related('category').prefetch_related('variants')
+        # Only show items whose parent category is also active
+        items = MenuItem.objects.filter(
+            is_active=True,
+            category__is_active=True,
+        ).select_related('category').prefetch_related('variants')
 
     if search_query:
         items = items.filter(
@@ -41,7 +46,8 @@ def category_detail(request, slug):
     """Category-specific menu page."""
     category = get_object_or_404(Category, slug=slug, is_active=True)
     items = MenuItem.objects.filter(
-        category=category, is_active=True
+        category=category,
+        is_active=True,
     ).prefetch_related('variants')
     categories = Category.objects.filter(is_active=True)
 
@@ -60,7 +66,9 @@ def item_detail(request, slug):
     """Individual menu item detail page."""
     item = get_object_or_404(MenuItem, slug=slug, is_active=True)
     related_items = MenuItem.objects.filter(
-        category=item.category, is_active=True
+        category=item.category,
+        is_active=True,
+        category__is_active=True,
     ).exclude(pk=item.pk)[:6]
 
     import urllib.parse
@@ -88,7 +96,8 @@ def search_ajax(request):
         Q(name__icontains=q) |
         Q(short_description__icontains=q) |
         Q(category__name__icontains=q),
-        is_active=True
+        is_active=True,
+        category__is_active=True,
     ).select_related('category')[:12]
 
     return render(request, 'menu/partials/search_results.html', {'items': items, 'query': q})

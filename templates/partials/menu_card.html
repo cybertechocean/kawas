@@ -26,15 +26,20 @@ Reusable menu item card. Pass `item` context variable.
   </button>
 
   <!-- Image -->
-  <a href="{{ item.get_absolute_url }}" class="block overflow-hidden aspect-square">
+  <a href="{{ item.get_absolute_url }}" class="block overflow-hidden aspect-square relative">
     {% if item.image %}
     <img src="{{ item.image.url }}"
          alt="{{ item.name }}"
          loading="lazy"
-         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105{% if not item.is_available %} opacity-50{% endif %}">
     {% else %}
-    <div class="w-full h-full bg-gradient-to-br from-espresso-100 to-latte flex items-center justify-center dark:from-espresso-800 dark:to-espresso-700">
+    <div class="w-full h-full bg-gradient-to-br from-espresso-100 to-latte flex items-center justify-center dark:from-espresso-800 dark:to-espresso-700{% if not item.is_available %} opacity-50{% endif %}">
       <i data-lucide="coffee" class="w-16 h-16 text-espresso-300 dark:text-espresso-600"></i>
+    </div>
+    {% endif %}
+    {% if not item.is_available %}
+    <div class="absolute inset-0 flex items-center justify-center">
+      <span class="bg-espresso-900/80 text-latte text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest backdrop-blur-sm">Unavailable</span>
     </div>
     {% endif %}
   </a>
@@ -67,12 +72,8 @@ Reusable menu item card. Pass `item` context variable.
     <div class="text-base font-bold text-espresso-800 dark:text-gold mb-3">{{ item.get_price_display }}</div>
     {% endif %}
 
-    <!-- Availability -->
-    {% if not item.is_available %}
-    <span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full mb-2 inline-block">Unavailable</span>
-    {% endif %}
-
     <!-- Action Buttons -->
+    {% if item.is_available %}
     <div class="grid grid-cols-2 gap-2 mt-3">
       <!-- Order Button -->
       <button onclick="showOrderingModal()"
@@ -105,5 +106,26 @@ Reusable menu item card. Pass `item` context variable.
         Save
       </button>
     </div>
+    {% else %}
+    {# Unavailable state — show details only, no order options #}
+    <div class="mt-3 space-y-2">
+      <p class="text-[11px] text-espresso-400 dark:text-latte/40 italic text-center">Currently not available</p>
+      <div class="grid grid-cols-2 gap-2">
+        <a href="{{ item.get_absolute_url }}"
+           class="col-span-1 flex items-center justify-center gap-1.5 border-2 border-espresso-200 dark:border-espresso-700 text-espresso-700 dark:text-latte hover:border-gold hover:text-gold text-xs font-semibold py-2.5 px-3 rounded-btn transition-all duration-200">
+          <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+          Details
+        </a>
+        <a href="{{ item|wa_url }}"
+           target="_blank"
+           rel="noopener"
+           class="col-span-1 flex items-center justify-center gap-1.5 border-2 border-[#25D366]/40 text-[#25D366] hover:bg-[#25D366]/10 text-xs font-semibold py-2.5 px-3 rounded-btn transition-all duration-200"
+           title="Ask on WhatsApp when this will be available">
+          <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+          Enquire
+        </a>
+      </div>
+    </div>
+    {% endif %}
   </div>
 </article>

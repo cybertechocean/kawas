@@ -8,42 +8,159 @@
 <div class="h-[112px] md:h-[120px]"></div>
 
 <!-- HERO SECTION -->
+{% if hero_slides %}
+{# ── Dynamic slider (DB slides exist) ── #}
+<section
+  class="relative min-h-[90vh] overflow-hidden bg-espresso-900 dark:bg-espresso-950"
+  x-data="heroSlider({{ hero_slides|length }})"
+  x-init="init()"
+>
+  {# ── Slides ── #}
+  {% for slide in hero_slides %}
+  <div
+    class="absolute inset-0 flex items-center justify-center"
+    x-show="current === {{ forloop.counter0 }}"
+    {% if not forloop.first %}style="display:none"{% endif %}
+    x-transition:enter="transition-opacity ease-in-out duration-700"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition-opacity ease-in-out duration-700"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+  >
+    {# Background #}
+    <div class="absolute inset-0">
+      {% if slide.image %}
+        <img src="{{ slide.image.url }}" alt="" class="w-full h-full object-cover" loading="eager">
+        <div class="absolute inset-0 bg-espresso-950/65"></div>
+      {% else %}
+        <div class="absolute inset-0 opacity-10">
+          <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="geo-s{{ forloop.counter }}" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse"><circle cx="40" cy="40" r="2" fill="#D4A94A"/><path d="M0 40 L40 0 L80 40 L40 80 Z" fill="none" stroke="#D4A94A" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#geo-s{{ forloop.counter }})"/></svg>
+        </div>
+      {% endif %}
+    </div>
+
+    {# Content #}
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center py-32">
+
+      {# Badge #}
+      {% if slide.badge %}
+      <div class="inline-flex items-center gap-2 bg-sage/20 border border-sage/40 text-sage text-sm font-medium px-4 py-2 rounded-full mb-8 animate-fade-in">
+        <span class="w-2 h-2 rounded-full bg-sage animate-pulse-slow"></span>
+        {{ slide.badge }}
+      </div>
+      {% endif %}
+
+      {# Steam #}
+      <div class="flex justify-center gap-3 mb-4 opacity-60">
+        <div class="w-0.5 h-8 bg-gold/50 rounded-full steam-line"></div>
+        <div class="w-0.5 h-10 bg-gold/50 rounded-full steam-line"></div>
+        <div class="w-0.5 h-6 bg-gold/50 rounded-full steam-line"></div>
+      </div>
+
+      {# Headline #}
+      <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold text-latte leading-[1.05] mb-4 animate-fade-up">
+        {{ slide.title }}
+      </h1>
+      {% if slide.subtitle %}
+      <h2 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-gold italic leading-[1.1] mb-6 animate-fade-up" style="animation-delay:.1s">
+        {{ slide.subtitle }}
+      </h2>
+      {% endif %}
+
+      {# Description #}
+      {% if slide.description %}
+      <p class="text-latte/70 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up" style="animation-delay:.2s">
+        {{ slide.description }}
+      </p>
+      {% else %}
+      <div class="mb-10"></div>
+      {% endif %}
+
+      {# CTAs #}
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up" style="animation-delay:.3s">
+        <a href="{{ slide.cta_primary_url }}" class="inline-flex items-center gap-2 bg-gold hover:bg-[#C08A2A] text-espresso-900 font-bold text-base px-8 py-4 rounded-btn shadow-luxury-md transition-all duration-200 hover:-translate-y-1 hover:shadow-luxury">
+          <i data-lucide="coffee" class="w-5 h-5"></i>
+          {{ slide.cta_primary_text }}
+        </a>
+        {% if slide.cta_secondary_text %}
+        <a href="{{ slide.cta_secondary_url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 btn-wa text-white font-bold text-base px-8 py-4 rounded-btn shadow-luxury-md transition-all duration-200 hover:-translate-y-1 hover:shadow-luxury">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          {{ slide.cta_secondary_text }}
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  {# Min-height placeholder (children are absolute) #}
+  <div class="min-h-[90vh] pointer-events-none" aria-hidden="true"></div>
+
+  {# ── Prev / Next arrows (only when >1 slide) ── #}
+  {% if hero_slides|length > 1 %}
+  <button
+    @click="prev()"
+    aria-label="Previous slide"
+    class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-espresso-900/50 hover:bg-espresso-900/80 border border-latte/20 hover:border-gold flex items-center justify-center text-latte hover:text-gold backdrop-blur-sm transition-all duration-200"
+  >
+    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+  </button>
+  <button
+    @click="next()"
+    aria-label="Next slide"
+    class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-espresso-900/50 hover:bg-espresso-900/80 border border-latte/20 hover:border-gold flex items-center justify-center text-latte hover:text-gold backdrop-blur-sm transition-all duration-200"
+  >
+    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+  </button>
+
+  {# Dot navigation #}
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5">
+    {% for slide in hero_slides %}
+    <button
+      @click="goTo({{ forloop.counter0 }})"
+      aria-label="Go to slide {{ forloop.counter }}"
+      class="h-2 rounded-full transition-all duration-400"
+      :class="current === {{ forloop.counter0 }} ? 'bg-gold w-7' : 'bg-latte/40 hover:bg-latte/70 w-2'"
+    ></button>
+    {% endfor %}
+  </div>
+  {% else %}
+  {# Scroll hint for single slide #}
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-50 animate-bounce">
+    <span class="text-latte text-xs tracking-widest uppercase">Scroll to explore</span>
+    <i data-lucide="chevron-down" class="w-4 h-4 text-gold"></i>
+  </div>
+  {% endif %}
+</section>
+
+{% else %}
+{# ── Static fallback (no slides in DB yet) ── #}
 <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-espresso-900 dark:bg-espresso-950">
-  <!-- Background Pattern -->
   <div class="absolute inset-0 opacity-10">
     <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="geo" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse"><circle cx="40" cy="40" r="2" fill="#D4A94A"/><path d="M0 40 L40 0 L80 40 L40 80 Z" fill="none" stroke="#D4A94A" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#geo)"/></svg>
   </div>
-
-  <!-- Content -->
   <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center py-24">
-
-    <!-- Halal Badge -->
     <div class="inline-flex items-center gap-2 bg-sage/20 border border-sage/40 text-sage text-sm font-medium px-4 py-2 rounded-full mb-8 animate-fade-in">
       <span class="w-2 h-2 rounded-full bg-sage animate-pulse-slow"></span>
       Halal Certified · 100% Alcohol-Free
     </div>
-
-    <!-- Steam Animation -->
     <div class="flex justify-center gap-3 mb-4 opacity-60">
       <div class="w-0.5 h-8 bg-gold/50 rounded-full steam-line"></div>
       <div class="w-0.5 h-10 bg-gold/50 rounded-full steam-line"></div>
       <div class="w-0.5 h-6 bg-gold/50 rounded-full steam-line"></div>
     </div>
-
-    <!-- Headline -->
-    <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold text-latte leading-[1.05] mb-6 animate-fade-up">
-      Crafted With Love.<br>
-      <span class="text-gold italic">Served With Excellence.</span>
+    <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold text-latte leading-[1.05] mb-4 animate-fade-up">
+      Crafted With Love.
     </h1>
-
-    <!-- Subtitle -->
-    <p class="text-latte/70 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up" style="animation-delay:0.2s">
+    <h2 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-gold italic leading-[1.1] mb-6 animate-fade-up" style="animation-delay:.1s">
+      Served With Excellence.
+    </h2>
+    <p class="text-latte/70 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up" style="animation-delay:.2s">
       Premium Specialty Coffee · Artisan Matcha · Signature Desserts<br class="hidden sm:block">
-      & Halal Dining Experience in Nyali, Mombasa
+      &amp; Halal Dining Experience in Nyali, Mombasa
     </p>
-
-    <!-- CTA Buttons -->
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up" style="animation-delay:0.3s">
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up" style="animation-delay:.3s">
       <a href="/menu/" class="inline-flex items-center gap-2 bg-gold hover:bg-[#C08A2A] text-espresso-900 font-bold text-base px-8 py-4 rounded-btn shadow-luxury-md transition-all duration-200 hover:-translate-y-1 hover:shadow-luxury">
         <i data-lucide="coffee" class="w-5 h-5"></i>
         Explore Our Menu
@@ -53,14 +170,51 @@
         Order on WhatsApp
       </a>
     </div>
-
-    <!-- Scroll hint -->
     <div class="mt-16 flex flex-col items-center gap-2 opacity-50 animate-bounce">
       <span class="text-latte text-xs tracking-widest uppercase">Scroll to explore</span>
       <i data-lucide="chevron-down" class="w-4 h-4 text-gold"></i>
     </div>
   </div>
 </section>
+{% endif %}
+
+{# Alpine.js hero slider logic #}
+<script>
+function heroSlider(total) {
+  return {
+    current: 0,
+    total: total || 1,
+    _timer: null,
+    init() {
+      if (this.total > 1) this._start();
+    },
+    next() {
+      this.current = (this.current + 1) % this.total;
+      this._reset();
+    },
+    prev() {
+      this.current = (this.current - 1 + this.total) % this.total;
+      this._reset();
+    },
+    goTo(i) {
+      this.current = i;
+      this._reset();
+    },
+    _start() {
+      this._timer = setInterval(() => {
+        this.current = (this.current + 1) % this.total;
+      }, 5500);
+    },
+    _reset() {
+      clearInterval(this._timer);
+      if (this.total > 1) this._start();
+    },
+    destroy() {
+      clearInterval(this._timer);
+    }
+  };
+}
+</script>
 
 <!-- HALAL TRUST SECTION -->
 <section class="py-12 bg-white dark:bg-dark-card">
