@@ -169,9 +169,9 @@
 
 <body class="bg-latte dark:bg-dark-bg text-espresso-900 dark:text-[#F5E6D3] font-body antialiased min-h-screen">
 
-  <!-- Announcement Bar -->
+  <!-- Announcement Bar — desktop only -->
   {% for announcement in announcements %}
-  <div class="py-2 px-4 text-center text-sm font-medium text-white" style="background-color: {{ announcement.bg_color }}">
+  <div class="hidden md:block py-2 px-4 text-center text-sm font-medium text-white" style="background-color: {{ announcement.bg_color }}">
     {{ announcement.text }}
     {% if announcement.link %}<a href="{{ announcement.link }}" class="underline ml-1">{{ announcement.link_text|default:"Learn more" }}</a>{% endif %}
   </div>
